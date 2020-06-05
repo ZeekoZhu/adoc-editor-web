@@ -1,0 +1,66 @@
+<mat-menu #headingMenu="matMenu">
+    <button mat-menu-item (click)="execCmd(headers[0])">
+        <mat-icon svgIcon="format-header-equal"></mat-icon>
+    </button>
+    <button mat-menu-item (click)="execCmd(headers[1])">
+        <mat-icon svgIcon="format-header-1"></mat-icon>
+    </button>
+    <button mat-menu-item (click)="execCmd(headers[2])">
+        <mat-icon svgIcon="format-header-2"></mat-icon>
+    </button>
+    <button mat-menu-item (click)="execCmd(headers[3])">
+        <mat-icon svgIcon="format-header-3"></mat-icon>
+    </button>
+    <button mat-menu-item (click)="execCmd(headers[4])">
+        <mat-icon svgIcon="format-header-4"></mat-icon>
+    </button>
+    <button mat-menu-item (click)="execCmd(headers[5])">
+        <mat-icon svgIcon="format-header-5"></mat-icon>
+    </button>
+</mat-menu>
+<mat-menu #marksMenu="matMenu">
+    <button mat-menu-item>
+        <mat-icon svgIcon="format-underline"></mat-icon>
+    </button>
+    <button mat-menu-item>
+        <mat-icon svgIcon="pencil"></mat-icon>
+        Add more...
+    </button>
+</mat-menu>
+<mat-menu #listMenu="matMenu">
+    <button mat-menu-item>
+        <mat-icon svgIcon="format-list-bulleted"></mat-icon>
+    </button>
+    <button mat-menu-item>
+        <mat-icon svgIcon="format-list-bulleted"></mat-icon>
+    </button>
+    <button mat-menu-item>
+        <mat-icon svgIcon="format-list-numbered"></mat-icon>
+    </button>
+    <button mat-menu-item>
+        <mat-icon svgIcon="format-list-checks"></mat-icon>
+    </button>
+</mat-menu>
+<mat-toolbar>
+    <app-toolbar-item icon="format-bold" (click)="execCmd(bold)"></app-toolbar-item>
+    <app-toolbar-item icon="format-italic" (click)="execCmd(italic)"></app-toolbar-item>
+    <app-toolbar-item icon="code-braces" (click)="execCmd(braces)"></app-toolbar-item>
+    <app-toolbar-item
+        icon="format-header-pound"
+        [matMenuTriggerFor]="headingMenu"
+    ></app-toolbar-item>
+    <app-toolbar-item
+        icon="marker"
+        [matMenuTriggerFor]="marksMenu"
+    ></app-toolbar-item>
+    <app-toolbar-item icon="image"></app-toolbar-item>
+
+    <app-toolbar-item icon="xml"></app-toolbar-item>
+    <app-toolbar-item icon="table"
+        (click)="openTableConfig()">
+    </app-toolbar-item>
+    <app-toolbar-item
+        [matMenuTriggerFor]="listMenu"
+        icon="format-list-bulleted-square"
+    ></app-toolbar-item>
+</mat-toolbar>

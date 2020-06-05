@@ -1,0 +1,40 @@
+<ng-container [formGroup]="fg">
+    <mat-form-field class="app-field">
+        <mat-label>Width</mat-label>
+        <input type="number" matInput formControlName="width">
+    </mat-form-field>
+    <mat-form-field class="app-field">
+        <mat-label>Horizontal</mat-label>
+        <mat-select formControlName="hAlign">
+            <mat-option value="<">
+                <mat-icon svgIcon="align-horizontal-left"></mat-icon>
+                Left
+            </mat-option>
+            <mat-option value="^">
+                <mat-icon svgIcon="align-horizontal-center"></mat-icon>
+                Center
+            </mat-option>
+            <mat-option value=">">
+                <mat-icon svgIcon="align-horizontal-right"></mat-icon>
+                Right
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="app-field ">
+        <mat-label>Vertical</mat-label>
+        <mat-select formControlName="vAlign">
+            <mat-option value="<">
+                <mat-icon svgIcon="align-vertical-top"></mat-icon>
+                Top
+            </mat-option>
+            <mat-option value="^">
+                <mat-icon svgIcon="align-vertical-center"></mat-icon>
+                Middle
+            </mat-option>
+            <mat-option value=">">
+                <mat-icon svgIcon="align-vertical-bottom"></mat-icon>
+                Bottom
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>

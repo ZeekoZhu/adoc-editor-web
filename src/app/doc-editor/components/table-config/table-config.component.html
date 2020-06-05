@@ -1,0 +1,129 @@
+<h1 mat-dialog-title>Create table</h1>
+
+<div mat-dialog-content class="table-form" [formGroup]="tableConfigForm">
+    <div class="form-col">
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Basic</mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field class="app-field">
+                    <mat-label>Columns</mat-label>
+                    <input matInput type="number" formControlName="columns"
+                        cdkFocusInitial>
+                </mat-form-field>
+                <mat-form-field class="app-field app-field--hide-number">
+                    <mat-label>Table Width</mat-label>
+                    <input matInput formControlName="width" type="number">
+                    <span matSuffix>%</span>
+                </mat-form-field>
+                <mat-form-field class="app-field">
+                    <mat-label>Format</mat-label>
+                    <mat-select formControlName="format">
+                        <mat-option value="psv">psv</mat-option>
+                        <mat-option value="csv">csv</mat-option>
+                        <mat-option value="dsv">dsv</mat-option>
+                        <mat-option value="tsv">tsv</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="app-field">
+                    <mat-label>Striping</mat-label>
+                    <mat-select formControlName="striping">
+                        <mat-option value="none">
+                            None
+                        </mat-option>
+                        <mat-option value="even">
+                            Even
+                        </mat-option>
+                        <mat-option value="odd">
+                            Odd
+                        </mat-option>
+                        <mat-option value="all">
+                            All
+                        </mat-option>
+                        <mat-option value="hover">
+                            Hover
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Border
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-form-field class="app-field">
+                    <mat-label>Frame</mat-label>
+                    <mat-select formControlName="frame">
+                        <mat-option value="all">
+                            All
+                        </mat-option>
+                        <mat-option value="topbot">
+                            Top & Bottom
+                        </mat-option>
+                        <mat-option value="sides">
+                            Left & Right
+                        </mat-option>
+                        <mat-option value="none">
+                            None
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="app-field">
+                    <mat-label>Grid</mat-label>
+                    <mat-select formControlName="grid">
+                        <mat-option value="all">
+                            All
+                        </mat-option>
+                        <mat-option value="rows">
+                            Rows
+                        </mat-option>
+                        <mat-option value="cols">
+                            Columns
+                        </mat-option>
+                        <mat-option value="none">
+                            None
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Advanced
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field class="app-field">
+                    <mat-label>Cell Separator</mat-label>
+                    <input matInput formControlName="separator">
+                </mat-form-field>
+                <mat-checkbox class="app-field" formControlName="header">Header</mat-checkbox>
+                <mat-checkbox class="app-field" formControlName="footer">Footer</mat-checkbox>
+                <mat-checkbox class="app-field" formControlName="rotate">Rotate</mat-checkbox>
+                <mat-checkbox formControlName="autoWidth" class="app-field">Fit to content</mat-checkbox>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!--  striping rotate header footer  -->
+    <div class="form-col">
+        <mat-accordion [multi]="true">
+            <mat-expansion-panel
+                #columnPanel
+                [expanded]="false"
+                *ngFor="let col of colConfigs; let i = index">
+                <mat-expansion-panel-header>
+                    <app-column-config-summary [showInfo]="columnPanel.expanded === false" [index]="i + 1" [colConfig]="colConfigAt(i)"></app-column-config-summary>
+                </mat-expansion-panel-header>
+                <app-table-col-config [fg]="col"></app-table-col-config>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div class="bottom"></div>
+    </div>
+</div>
+
+<div mat-dialog-actions style="float: right">
+    <button mat-button (click)="close(false)">Cancel</button>
+    <button mat-button (click)="close(true)">Ok</button>
+</div>

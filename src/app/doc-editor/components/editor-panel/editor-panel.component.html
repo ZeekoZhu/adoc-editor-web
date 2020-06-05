@@ -1,0 +1,10 @@
+<div class="editor-panel">
+    <div class="editor-panel__block editor-area">
+        <app-editor-toolbar
+            class="editor-area__tools"
+            (execute)="executeToolbarCommand($event)">
+        </app-editor-toolbar>
+        <app-adoc-editor class="editor-area__editor"></app-adoc-editor>
+    </div>
+    <app-preview class="editor-panel__block"></app-preview>
+</div>

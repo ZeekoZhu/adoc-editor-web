@@ -1,0 +1,18 @@
+<span class="column-info">
+    <strong class="column-info__item">{{index}}</strong>
+    <ng-container *ngIf="showInfo">
+        <ng-container [ngSwitch]="colConfig?.hAlign">
+            <mat-icon class="column-info__item" *ngSwitchDefault svgIcon="align-horizontal-left"></mat-icon>
+            <mat-icon class="column-info__item" *ngSwitchCase="'^'" svgIcon="align-horizontal-center"></mat-icon>
+            <mat-icon class="column-info__item" *ngSwitchCase="'>'" svgIcon="align-horizontal-right"></mat-icon>
+        </ng-container>
+
+        <ng-container [ngSwitch]="colConfig?.vAlign">
+            <mat-icon class="column-info__item" *ngSwitchDefault svgIcon="align-vertical-top"></mat-icon>
+            <mat-icon class="column-info__item" *ngSwitchCase="'^'" svgIcon="align-vertical-center"></mat-icon>
+            <mat-icon class="column-info__item" *ngSwitchCase="'>'" svgIcon="align-vertical-bottom"></mat-icon>
+        </ng-container>
+
+        <span class="column-info__item">{{colConfig?.width}}</span>
+    </ng-container>
+</span>
