@@ -14,6 +14,7 @@ export class EditorToolbarComponent implements OnInit {
     bold = def('bold');
     italic = def('italic');
     braces = def('braces');
+    codeBlock = def('codeBlock');
 
     headers = [ 0, 1, 2, 3, 4, 5 ].map(i => def('header', i));
 

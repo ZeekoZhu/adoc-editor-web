@@ -7,4 +7,5 @@ export type AdocEditorCommand =
     | Def<'braces'>
     | Def<'header', [ number ]>
     | Def<'table', [ TableConfigForm ]>
-    | Def<'focus'>
+    | Def<'codeBlock'>
+    | Def<'focus'>;

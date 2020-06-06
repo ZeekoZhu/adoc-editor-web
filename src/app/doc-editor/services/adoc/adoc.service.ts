@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AdocConverter } from './adoc-converter';
+
 // import asciidoctor from 'asciidoctor';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class AdocService {
     // private converter = new AdocConverter(asciidoctor());
     private readonly worker: Worker;
     private msgId = 0;
-    private tasks = new Map<number, Function>();
+    private tasks = new Map<number, (value: any) => void>();
 
     constructor() {
         const tasks = this.tasks;

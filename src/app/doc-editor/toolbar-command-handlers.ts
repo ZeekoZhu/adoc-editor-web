@@ -1,4 +1,4 @@
-import { Ace, Range } from 'ace-builds';
+import { Ace, edit, Range } from 'ace-builds';
 import Editor = Ace.Editor;
 import { AdocEditorCommand } from './toolbar-commands';
 import { caseWhen } from '@elmish-ts/tagged-union';
@@ -126,6 +126,17 @@ ${tableConfig.separator}===
     editor.focus();
 };
 
+const codeBlockHandler = (editor: Editor) => {
+    const snippet = `
+[source, $1]
+----
+$2
+----
+`;
+    editor.insertSnippet(snippet);
+    editor.focus();
+};
+
 export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
     caseWhen(cmd, {
         bold: () => inlineMarkHandler('**')(editor),
@@ -134,5 +145,6 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
         header: (level: number) => headerHandler(level)(editor),
         table: (data: TableConfigForm) => tableHandler(data)(editor),
         focus: () => editor.focus(),
+        codeBlock: () => codeBlockHandler(editor),
     });
 };

@@ -2,10 +2,10 @@ import { Asciidoctor } from 'asciidoctor';
 import Registry = Asciidoctor.Extensions.Registry;
 import ProcessorOptions = Asciidoctor.ProcessorOptions;
 
-const blockIdMarkerProcessor = function (registry: Registry) {
+const blockIdMarkerProcessor = (registry: Registry) => {
     registry.treeProcessor(function () {
         const self = this;
-        self.process(function (doc) {
+        self.process(doc => {
             const blocks = doc.findBy(() => true);
             blocks.forEach(blk => {
                 const lineMark = '__adoc-line-' + blk.getLineNumber();

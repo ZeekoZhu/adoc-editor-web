@@ -3,9 +3,9 @@
  */
 export interface ColumnConfigForm {
     width: number;
-    hAlign: '<' | '^' | '>',
-    vAlign: '<' | '^' | '>',
-    style: 'a' | 'e' | 'h' | 'l' | 'm' | 'd' | 's' | 'v',
+    hAlign: '<' | '^' | '>';
+    vAlign: '<' | '^' | '>';
+    style: 'a' | 'e' | 'h' | 'l' | 'm' | 'd' | 's' | 'v';
 }
 
 export interface TableConfigForm {

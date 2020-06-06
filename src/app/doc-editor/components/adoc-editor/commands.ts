@@ -50,9 +50,20 @@ const braces: Command = {
     },
 };
 
+const codeBlock: Command = {
+    name: 'code-block',
+    bindKey: {
+        win: 'ctrl+l',
+        mac: 'cmd+l',
+    },
+    exec: editor => {
+        commandHandler(def('codeBlock'), editor);
+    },
+};
+
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);
 export const commands: Command[] = [
-    ...headerCommands, bold, italic, braces,
+    ...headerCommands, bold, italic, braces, codeBlock,
 ];
 export const bindCommands = (editor: Editor) => {
     commands.forEach(cmd => editor.commands.addCommand(cmd));

@@ -1,3 +1,4 @@
+<!-- heading menu -->
 <mat-menu #headingMenu="matMenu">
     <button mat-menu-item (click)="execCmd(headers[0])">
         <mat-icon svgIcon="format-header-equal"></mat-icon>
@@ -18,6 +19,7 @@
         <mat-icon svgIcon="format-header-5"></mat-icon>
     </button>
 </mat-menu>
+<!-- marks menu -->
 <mat-menu #marksMenu="matMenu">
     <button mat-menu-item>
         <mat-icon svgIcon="format-underline"></mat-icon>
@@ -27,6 +29,7 @@
         Add more...
     </button>
 </mat-menu>
+<!-- list menu -->
 <mat-menu #listMenu="matMenu">
     <button mat-menu-item>
         <mat-icon svgIcon="format-list-bulleted"></mat-icon>
@@ -55,9 +58,11 @@
     ></app-toolbar-item>
     <app-toolbar-item icon="image"></app-toolbar-item>
 
-    <app-toolbar-item icon="xml"></app-toolbar-item>
+    <app-toolbar-item icon="xml"
+                      (click)="execCmd(codeBlock)"
+    ></app-toolbar-item>
     <app-toolbar-item icon="table"
-        (click)="openTableConfig()">
+                      (click)="openTableConfig()">
     </app-toolbar-item>
     <app-toolbar-item
         [matMenuTriggerFor]="listMenu"

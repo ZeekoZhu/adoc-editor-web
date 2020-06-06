@@ -16,9 +16,9 @@ export const addSnippets = (editor) => {
         editor.setOptions({
             enableSnippets: true,
         });
-        ace.config.loadModule('ace/snippets', m => {
-            const snippets = m.snippetManager.parseSnippetFile(snippetsDef);
-            m.snippetManager.register(snippets, 'asciidoctor');
+        ace.config.loadModule('ace/snippets', x => {
+            const snippets = x.snippetManager.parseSnippetFile(snippetsDef);
+            x.snippetManager.register(snippets, 'asciidoctor');
         });
     });
 };
