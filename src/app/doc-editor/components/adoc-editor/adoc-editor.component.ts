@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { DocEditorService } from '@app/doc-editor/store';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { asyncScheduler, fromEvent, Subject } from 'rxjs';
 import { map, takeUntil, throttleTime } from 'rxjs/operators';
 import * as ace from 'ace-builds';
@@ -9,7 +9,6 @@ ace.config.setModuleUrl('ace/mode/asciidoctor',
     require('file-loader?esModule=false!./asciidoctor-mode.js'));
 
 import { addSnippets } from '@app/doc-editor/components/adoc-editor/snippets';
-import { commandHandler } from '@app/doc-editor/toolbar-command-handlers';
 import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
 
 @Component({
@@ -35,11 +34,7 @@ export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    bindToolbarCommand() {
-        this.docEditorSvc.adocEditorCommands$.subscribe(cmd => commandHandler(cmd, this.editor));
-    }
-
-    constructor(private docEditorSvc: DocEditorService) {
+    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {
     }
 
     ngOnInit(): void {
@@ -54,8 +49,8 @@ export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         this.bindOnChange();
         this.editor.session.setUseWrapMode(true);
         addSnippets(this.editor);
-        bindCommands(this.editor);
-        this.bindToolbarCommand();
+        this.docEditorSvc.initialize(this.editor);
+        bindCommands(this.editor, this.docEditorSvc);
         // @ts-ignore
     }
 

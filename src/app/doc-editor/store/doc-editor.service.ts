@@ -1,16 +1,13 @@
-import { Injectable } from '@angular/core';
-import { DocEditorStore } from './doc-editor.store';
-import { Subject } from 'rxjs';
 import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
+import { Ace } from 'ace-builds';
+import Editor = Ace.Editor;
 
-@Injectable({ providedIn: 'root' })
-export class DocEditorService {
-    adocEditorCommands$ = new Subject<AdocEditorCommand>();
+export interface DocEditorService {
+    executeCommand(cmd: AdocEditorCommand): void;
 
-    constructor(private store: DocEditorStore) {
-    }
+    initialize(editor: Editor): void;
 
-    setContent(content: string) {
-        this.store.update({ content });
-    }
+    setContent(content: string): void;
+
+    openTableConfig(): void;
 }

@@ -410,18 +410,25 @@ ace.define(
         (function () {
             this.type = 'text';
             this.getNextLineIndent = function (state, line, tab) {
-                if (state === 'listblock') {
-                    const match = /^((?:.+)?)([-+*][ ]+)/.exec(line);
-                    if (match) {
-                        return new Array(match[1].length + 1).join(' ') + match[2];
-                    } else {
-                        return '';
+                if (state === 'listText') {
+                    switch (line[0]) {
+                        case '-':
+                            return '- ';
+                        case '.':
+                        case '*':
+                            const match = /^([.*]+)\s+(.+)/.exec(line);
+                            if (match && match[2]) {
+                                return match[1] + ' ';
+                            }
+                            return '';
+                        default:
+                            return '';
                     }
                 } else {
                     return this.$getIndent(line);
                 }
             };
-            this.$id = 'ace/mode/asciidoc';
+            this.$id = 'ace/mode/asciidoctor';
         }).call(Mode.prototype);
 
         exports.Mode = Mode;

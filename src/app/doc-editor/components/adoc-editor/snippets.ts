@@ -4,11 +4,16 @@ const snippetsDef = `
 snippet code
 	[source, \${1:lang}]
 	----
+	\${2:// hello, world}
 	----
 snippet table
 	|===
 	\${1}
 	|===
+snippet img
+	image:\${1:url}[\${2:alt}]
+snippet pic
+	image::\${1:url}[\${2:alt}]
 `;
 
 export const addSnippets = (editor) => {

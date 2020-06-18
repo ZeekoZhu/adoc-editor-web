@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { def } from '@elmish-ts/tagged-union';
 import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
-import { MatDialog } from '@angular/material/dialog';
-import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
+import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 
 @Component({
     selector: 'app-editor-toolbar',
@@ -10,26 +9,20 @@ import { TableConfigComponent } from '@app/doc-editor/components/table-config/ta
     styleUrls: [ './editor-toolbar.component.less' ],
 })
 export class EditorToolbarComponent implements OnInit {
-    @Output() execute = new EventEmitter<AdocEditorCommand>();
     bold = def('bold');
     italic = def('italic');
     braces = def('braces');
-    codeBlock = def('codeBlock');
-
     headers = [ 0, 1, 2, 3, 4, 5 ].map(i => def('header', i));
 
     execCmd(cmd: AdocEditorCommand) {
-        this.execute.emit(cmd);
+        this.docEditorSvc.executeCommand(cmd);
     }
 
     async openTableConfig() {
-        const ref = this.dialog.open(TableConfigComponent, {});
-        ref.afterClosed().subscribe(() => {
-            this.execCmd(def('focus'));
-        });
+        this.docEditorSvc.openTableConfig();
     }
 
-    constructor(private dialog: MatDialog) { }
+    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {}
 
     ngOnInit(): void {
     }

@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgFormsManager } from '@ngneat/forms-manager';
-import { DocEditorForms } from '@app/doc-editor/doc-editor-forms';
-import { filter, map } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DocEditorForms } from '@app/doc-editor/doc-editor-forms';
 import { DocEditorService } from '@app/doc-editor/store';
+import { DocEditorServiceToken } from '@app/doc-editor/store/default-doc-editor.service';
 import { def } from '@elmish-ts/tagged-union';
+import { NgFormsManager } from '@ngneat/forms-manager';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-table-config',
@@ -123,13 +124,13 @@ export class TableConfigComponent implements OnInit, OnDestroy {
     close(isOk: boolean) {
         if (isOk) {
             const data = this.fm.getControl('tableConfig').rawValue;
-            this.docEditorSvc.adocEditorCommands$.next(def('table', data));
+            this.docEditorSvc.executeCommand(def('table', data));
         }
         this.dialogRef.close();
     }
 
     constructor(
-        private docEditorSvc: DocEditorService,
+        @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
         public dialogRef: MatDialogRef<TableConfigComponent>,
         private fb: FormBuilder,
         private fm: NgFormsManager<DocEditorForms>) {

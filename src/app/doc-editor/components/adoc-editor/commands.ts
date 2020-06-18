@@ -1,21 +1,24 @@
-import { Ace } from 'ace-builds';
-import Command = Ace.Command;
-import { commandHandler } from '../../toolbar-command-handlers';
+import { DocEditorService } from '@app/doc-editor/store';
 import { def } from '@elmish-ts/tagged-union';
+import { Ace, edit, Range } from 'ace-builds';
+import { commandHandler } from '../../toolbar-command-handlers';
+import Command = Ace.Command;
 import Editor = Ace.Editor;
 
 const insertHeader = (level: number): Command => {
     return {
         name: 'insert-h' + level,
         bindKey: {
-            win: 'ctrl+' + level,
-            mac: 'cmd+' + level,
+            win: 'alt+' + level,
+            mac: 'option+' + level,
         },
         exec: editor => {
             commandHandler(def('header', level - 1), editor);
         },
     };
 };
+
+type AdocEditorCommand = (editorSvc: DocEditorService) => Command;
 
 const bold: Command = {
     name: 'format-bold',
@@ -50,21 +53,78 @@ const braces: Command = {
     },
 };
 
-const codeBlock: Command = {
-    name: 'code-block',
+const openTableConfig: AdocEditorCommand = (svc) => {
+    return {
+        name: 'openTableConfig',
+        bindKey: {
+            win: 'ctrl+shift+t',
+            mac: 'cmd+shift+t',
+        },
+        exec: () => {
+            svc.openTableConfig();
+        },
+    };
+};
+
+const breakList: Command = {
+    name: 'break-list',
     bindKey: {
-        win: 'ctrl+l',
-        mac: 'cmd+l',
+        win: 'shift+enter',
+        mac: 'shift+enter',
     },
     exec: editor => {
-        commandHandler(def('codeBlock'), editor);
+        const position = editor.getCursorPosition();
+        const { row } = position;
+        const line = editor.session.getLine(row);
+        const isEmptyList = (str: string) => {
+            return /^[-.*]+\s+$/.test(str) || /^\* \[[x* ]?]\s+$/.test(str);
+        };
+        if (isEmptyList(line)) {
+            editor.session.removeFullLines(row, row);
+        }
+        editor.session.getDocument().insertMergedLines(position, [ '', '', '' ]);
     },
 };
 
+const list: Command = {
+    name: 'insert-list',
+    bindKey: {
+        win: 'ctrl+1',
+        mac: 'cmd+1',
+    },
+    exec: editor => {
+        commandHandler(def('list', def('ul', 1, '*')), editor);
+    },
+};
+
+const increaseListLevel: Command = {
+    name: 'increase-list-level',
+    bindKey: {
+        win: 'ctrl+]',
+        mac: 'cmd+]',
+    },
+    exec: editor => commandHandler(def('listLevel', true), editor),
+};
+
+const decreaseListLevel: Command = {
+    name: 'decrease-list-level',
+    bindKey: {
+        win: 'ctrl+[',
+        mac: 'cmd+[',
+    },
+    exec: editor => commandHandler(def('listLevel', false), editor),
+};
+
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);
-export const commands: Command[] = [
-    ...headerCommands, bold, italic, braces, codeBlock,
+export const commands: (AdocEditorCommand | Command)[] = [
+    ...headerCommands, bold, italic, braces, openTableConfig, breakList, list, increaseListLevel, decreaseListLevel,
 ];
-export const bindCommands = (editor: Editor) => {
-    commands.forEach(cmd => editor.commands.addCommand(cmd));
+export const bindCommands = (editor: Editor, editorSvc: DocEditorService) => {
+    commands.forEach(cmd => {
+        if (typeof (cmd) === 'function') {
+            editor.commands.addCommand(cmd(editorSvc));
+        } else {
+            editor.commands.addCommand(cmd);
+        }
+    });
 };

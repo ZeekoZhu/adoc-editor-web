@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DocEditorService } from '@app/doc-editor/store';
+import { Component, Inject, OnInit } from '@angular/core';
+import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
 
 @Component({
@@ -9,9 +9,10 @@ import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
 })
 export class EditorPanelComponent implements OnInit {
 
-    constructor(private docEditorSvc: DocEditorService) { }
+    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) { }
+
     executeToolbarCommand(cmd: AdocEditorCommand) {
-        this.docEditorSvc.adocEditorCommands$.next(cmd);
+        this.docEditorSvc.executeCommand(cmd);
     }
 
     ngOnInit(): void {

@@ -35,9 +35,6 @@
         <mat-icon svgIcon="format-list-bulleted"></mat-icon>
     </button>
     <button mat-menu-item>
-        <mat-icon svgIcon="format-list-bulleted"></mat-icon>
-    </button>
-    <button mat-menu-item>
         <mat-icon svgIcon="format-list-numbered"></mat-icon>
     </button>
     <button mat-menu-item>
@@ -55,11 +52,6 @@
     <app-toolbar-item
         icon="marker"
         [matMenuTriggerFor]="marksMenu"
-    ></app-toolbar-item>
-    <app-toolbar-item icon="image"></app-toolbar-item>
-
-    <app-toolbar-item icon="xml"
-                      (click)="execCmd(codeBlock)"
     ></app-toolbar-item>
     <app-toolbar-item icon="table"
                       (click)="openTableConfig()">
