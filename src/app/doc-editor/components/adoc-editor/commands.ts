@@ -87,13 +87,35 @@ const breakList: Command = {
 };
 
 const list: Command = {
-    name: 'insert-list',
+    name: 'insert-ul',
     bindKey: {
         win: 'ctrl+1',
         mac: 'cmd+1',
     },
     exec: editor => {
-        commandHandler(def('list', def('ul', 1, '*')), editor);
+        commandHandler(def('list', { type: 'ul', level: 1, mark: '*' }), editor);
+    },
+};
+
+const orderedList: Command = {
+    name: 'insert-ol',
+    bindKey: {
+        win: 'ctrl+2',
+        mac: 'cmd+2',
+    },
+    exec: editor => {
+        commandHandler(def('list', { type: 'ol', level: 1, mark: '.' }), editor);
+    },
+};
+
+const checkList: Command = {
+    name: 'insert-checkList',
+    bindKey: {
+        win: 'ctrl+3',
+        mac: 'cmd+3',
+    },
+    exec: editor => {
+        commandHandler(def('list', { type: 'check', level: 1, mark: '*' }), editor);
     },
 };
 
@@ -117,7 +139,9 @@ const decreaseListLevel: Command = {
 
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);
 export const commands: (AdocEditorCommand | Command)[] = [
-    ...headerCommands, bold, italic, braces, openTableConfig, breakList, list, increaseListLevel, decreaseListLevel,
+    ...headerCommands, bold, italic, braces,
+    openTableConfig, breakList, list, orderedList, checkList,
+    increaseListLevel, decreaseListLevel,
 ];
 export const bindCommands = (editor: Editor, editorSvc: DocEditorService) => {
     commands.forEach(cmd => {

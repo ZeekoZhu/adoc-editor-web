@@ -1,9 +1,19 @@
 import { def, Def } from '@elmish-ts/tagged-union';
 import { TableConfigForm } from '@app/doc-editor/doc-editor-forms';
 
-export type UnorderedList = Def<'ul', [ number, string ]>;
-export type OrderedList = Def<'ol', [ number ]>;
-export type CheckList = Def<'check', [ number, boolean ]>;
+interface ListBase {
+    type: 'ul' | 'ol' | 'check';
+    level: number;
+    mark: string;
+}
+
+export type OrderedList = ListBase;
+
+export type UnorderedList = ListBase ;
+
+export interface CheckList extends ListBase {
+    checked: boolean;
+}
 
 export type ListType =
     | OrderedList

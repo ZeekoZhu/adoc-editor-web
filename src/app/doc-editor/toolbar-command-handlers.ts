@@ -1,8 +1,8 @@
-import { ModifierKeys } from '@angular/cdk/testing';
 import { ColumnConfigForm, TableConfigForm } from '@app/doc-editor/doc-editor-forms';
 import { caseWhen, Def, def } from '@elmish-ts/tagged-union';
 import { Ace, Range } from 'ace-builds';
-import { AdocEditorCommand, ListType, OrderedList, UnorderedList } from './toolbar-commands';
+
+import { AdocEditorCommand, CheckList, ListType} from './toolbar-commands';
 import Editor = Ace.Editor;
 
 declare module 'ace-builds' {
@@ -127,9 +127,9 @@ ${tableConfig.separator}===
     editor.focus();
 };
 
-const matchListMark = (line: string) => /^([*-.]+)(\s+.*)$/.exec(line);
+const matchListMark = (line: string) => /^([*-.]+)\s+(.*)$/.exec(line);
 
-const matchChecklistMark = (str: string) => /^\[([*x ])]\s+.*$/.exec(str);
+const matchChecklistMark = (str: string) => /^\[([*xX ])]\s+/.exec(str);
 
 const getListInfo = (line: string): ListType | null => {
     const match = matchListMark(line);
@@ -139,82 +139,102 @@ const getListInfo = (line: string): ListType | null => {
     const mark = match[1][0];
     const level = match[1].length;
     if (mark === '.') {
-        return def('ol', level);
+        return { type: 'ol', level, mark };
     }
     const checklistMatch = matchChecklistMark(match[2]);
     if (checklistMatch !== null) {
-        return def('check', level, checklistMatch[1] !== ' ');
+        const isChecked = checklistMatch[1] !== ' ';
+        return { type: 'check', level, mark, checked: isChecked };
     }
-    return def('ul', level, mark);
+    return { type: 'ul', level, mark };
 };
 
-const listHandler = (type: ListType) => (editor: Editor) => {
+const listHandler = (newList: ListType) => (editor: Editor) => {
     const { row } = editor.getCursorPosition();
     const line = editor.session.getLine(row);
-    const doc = editor.session.getDocument();
-    const originListInfo = getListInfo(line);
-    if (originListInfo === null) {
-        const snippet = caseWhen(type, {
-            ol: val => '.'.repeat(val) + ' ',
-            ul: (level, mark) => mark.repeat(level) + ' ',
-            check: () => '* [${1:x}] ',
-        });
-        editor.insertSnippet(snippet);
+    const originList = getListInfo(line);
+    const operations = [];
+    if (originList === null) {
+        operations.push(def('add', newList));
     } else {
-        caseWhen(type, {
-            ul: () => {
-                caseWhen(originListInfo, {
-                    ul: () => updateUl(type as UnorderedList, originListInfo as UnorderedList),
-                    _: () => replaceList(type, originListInfo),
-                });
-            },
-            ol: val => 2,
-            check: () => 2,
-        });
+        if (newList.type === originList.type) {
+            if (originList.type === 'check') {
+                const checkList = originList as CheckList;
+                operations.push(...replaceList(originList, { ...originList, checked: !checkList.checked }));
+            } else {
+                operations.push(def('remove', originList));
+            }
+        } else {
+            operations.push(...replaceList(originList, newList));
+        }
     }
+    operations.forEach(op => modifyList(op, editor));
 };
 
 type ListModification =
     | Def<'add', [ ListType ]>
     | Def<'remove', [ ListType ]>;
 
-const replaceList = (newList: ListType, originList: ListType): ListModification[] => {
-    return [ def('remove', originList), def('add', newList) ];
-};
-
-const updateOl = (newList: OrderedList, originList: OrderedList): ListModification[] => {
-    const [ newLevel ] = newList.ol;
-    const [ originLevel ] = originList.ol;
-    if(newLevel)
-};
-
-const updateUl = (newList: UnorderedList, originList: UnorderedList): ListModification[] => {
-    const [ newLevel, newMark ] = newList.ul;
-    const [ originLevel, originMark ] = originList.ul;
-    const levelChanged = newLevel !== originLevel;
-    const markChanged = newMark !== originMark;
-    const result: ListModification[] = [];
-    if ((levelChanged || markChanged) === false) {
-        const op = def('remove', originList);
-        result.push(op);
-    } else {
-        result.push(...replaceList(newList)(originList));
+const toListString = (list: ListType): string => {
+    let result = '';
+    switch (list.type) {
+        case 'ul':
+        case 'ol':
+            result = list.mark.repeat(list.level);
+            break;
+        case 'check':
+            const checkList = list as CheckList;
+            result = `${'*'.repeat(list.level)} [${checkList.checked === true ? 'x' : ' '}]`;
+            break;
     }
-    return result;
+    return result + ' ';
+};
+
+const addList = (list: ListType, editor: Editor) => {
+    const doc = editor.session.getDocument();
+    const currentPosition = editor.getCursorPosition();
+    doc.insert({ row: currentPosition.row, column: 0 }, toListString(list));
+};
+
+const removeList = (editor: Editor) => {
+    const doc = editor.session.getDocument();
+    const { row } = editor.getCursorPosition();
+    const line = editor.session.getLine(row);
+    const listRegex = /^([*-.]+(\s+\[[xX* ]])?\s+)/;
+    const match = listRegex.exec(line);
+    if (match !== null) {
+        doc.remove(new Range(row, 0, row, match[0].length));
+    }
+};
+
+const modifyList = (modification: ListModification, editor: Editor) => {
+    caseWhen(modification, {
+        add: list => addList(list, editor),
+        remove: () => removeList(editor),
+    });
+};
+
+const replaceList = (originList: ListType, newList: ListType): ListModification[] => {
+    return [ def('remove', originList), def('add', newList) ];
 };
 
 const changeListLevel = (increase: boolean) => editor => {
     const position = editor.getCursorPosition();
     const { row } = position;
     const line = editor.session.getLine(row);
-
-    const match = matchListMark(line);
-    if (match) {
-        const doc = editor.session.getDocument();
-        const originMark = new Range(row, 0, row, match[1].length);
-        const replacement = increase ? match[1] + match[1][0] : match[1].substring(0, match[1].length - 1);
-        doc.replace(originMark, replacement);
+    const originList = getListInfo(line);
+    if (originList === null) {
+        return;
     }
+    const modification: ListModification[] = [];
+
+    const newList = { ...originList, level: originList.level + (increase ? 1 : -1) };
+    if (newList.level === 0) {
+        modification.push(def('remove', originList));
+    } else {
+        modification.push(...replaceList(originList, newList));
+    }
+    modification.forEach(x => modifyList(x, editor));
 };
 
 export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
