@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AdocConverter } from './adoc-converter';
+import { AdocConverter } from '@app/doc-editor/services/adoc/adoc-converter';
 
-// import asciidoctor from 'asciidoctor';
+import asciidoctor from 'asciidoctor';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AdocService {
-    // private converter = new AdocConverter(asciidoctor());
+    private converter = new AdocConverter(asciidoctor());
     private readonly worker: Worker;
     private msgId = 0;
     private tasks = new Map<number, (value: any) => void>();
@@ -33,7 +33,7 @@ export class AdocService {
                 this.tasks.set(id, resolve);
             }));
         } else {
-            return Promise.resolve(content);
+            return Promise.resolve(this.converter.convert(content));
         }
 
     }

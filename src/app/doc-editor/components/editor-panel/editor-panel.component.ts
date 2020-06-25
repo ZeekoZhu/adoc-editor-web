@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
-import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
+import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 
 @Component({
     selector: 'app-editor-panel',

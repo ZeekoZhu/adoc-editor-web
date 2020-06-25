@@ -1,65 +1,66 @@
-import { NgModule } from '@angular/core';
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import {
     AdocEditorComponent,
-    PreviewComponent,
+    ColumnConfigSummaryComponent,
     EditorPanelComponent,
+    EditorToolbarComponent,
+    PreviewComponent,
+    TableColConfigComponent,
+    TableConfigComponent,
+    ToolbarItemComponent,
 } from '@app/doc-editor/components';
-import { EditorToolbarComponent } from './components/editor-toolbar/editor-toolbar.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { ToolbarItemComponent } from './components/toolbar-item/toolbar-item.component';
-import { MatRippleModule } from '@angular/material/core';
-import { TableConfigComponent } from './components/table-config/table-config.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
-import { TableColConfigComponent } from './components/table-col-config/table-col-config.component';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatCardModule } from '@angular/material/card';
-import { A11yModule } from '@angular/cdk/a11y';
-import { ColumnConfigSummaryComponent } from './components/column-config-summary/column-config-summary.component';
-import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [
         AdocEditorComponent,
-        PreviewComponent,
+        ColumnConfigSummaryComponent,
         EditorPanelComponent,
         EditorToolbarComponent,
-        ToolbarItemComponent,
-        TableConfigComponent,
+        PreviewComponent,
         TableColConfigComponent,
-        ColumnConfigSummaryComponent,
+        TableConfigComponent,
+        ToolbarItemComponent,
     ],
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatIconModule,
-        MatRippleModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDividerModule,
-        MatListModule,
-        MatSelectModule,
-        MatAutocompleteModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatCardModule,
         A11yModule,
+        CommonModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
         MatChipsModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
     ],
 })
 export class DocEditorModule {

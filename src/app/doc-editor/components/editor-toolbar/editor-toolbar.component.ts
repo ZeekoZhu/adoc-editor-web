@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { def } from '@elmish-ts/tagged-union';
-import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
+import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 
 @Component({

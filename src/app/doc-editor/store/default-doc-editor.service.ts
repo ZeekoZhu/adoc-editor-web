@@ -1,14 +1,15 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
-import { DocEditorStore } from './doc-editor.store';
-import { Subject } from 'rxjs';
-import { AdocEditorCommand } from '@app/doc-editor/toolbar-commands';
-import { MatDialog } from '@angular/material/dialog';
-import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
 import { Ace } from 'ace-builds';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 import { def } from '@elmish-ts/tagged-union';
-import { commandHandler } from '@app/doc-editor/toolbar-command-handlers';
-import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
+import { inject, Injectable, InjectionToken } from '@angular/core';
+
 import Editor = Ace.Editor;
+import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
+import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
+import { DocEditorStore } from './doc-editor.store';
+import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
+import { commandHandler } from '@app/doc-editor/toolbar-command-handlers';
 
 export const DocEditorServiceToken = new InjectionToken('DocEditorService', {
     providedIn: 'root',

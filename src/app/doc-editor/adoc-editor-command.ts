@@ -1,5 +1,5 @@
-import { def, Def } from '@elmish-ts/tagged-union';
-import { TableConfigForm } from '@app/doc-editor/doc-editor-forms';
+import { Def } from '@elmish-ts/tagged-union';
+import { TableConfigForm } from './doc-editor-forms';
 
 interface ListBase {
     type: 'ul' | 'ol' | 'check';

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { DocEditorStore, DocEditorState } from './doc-editor.store';
 import { debounceTime, flatMap } from 'rxjs/operators';
+
 import { AdocService } from '../services';
+import { DocEditorStore, DocEditorState } from './doc-editor.store';
 
 @Injectable({ providedIn: 'root' })
 export class DocEditorQuery extends Query<DocEditorState> {

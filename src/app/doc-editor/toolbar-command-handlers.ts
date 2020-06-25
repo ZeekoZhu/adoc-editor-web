@@ -2,7 +2,7 @@ import { ColumnConfigForm, TableConfigForm } from '@app/doc-editor/doc-editor-fo
 import { caseWhen, Def, def } from '@elmish-ts/tagged-union';
 import { Ace, Range } from 'ace-builds';
 
-import { AdocEditorCommand, CheckList, ListType} from './toolbar-commands';
+import { AdocEditorCommand, CheckList, ListType} from './adoc-editor-command';
 import Editor = Ace.Editor;
 
 declare module 'ace-builds' {
