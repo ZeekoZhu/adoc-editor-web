@@ -1,16 +1,16 @@
 /**
  * See: [Column Formatting](https://asciidoctor.org/docs/user-manual/#cols-format)
  */
-export interface ColumnConfigForm {
+export interface ColumnConfigModel {
     width: number;
     hAlign: '<' | '^' | '>';
     vAlign: '<' | '^' | '>';
     style: 'a' | 'e' | 'h' | 'l' | 'm' | 'd' | 's' | 'v';
 }
 
-export interface TableConfigForm {
+export interface TableConfigModel {
     columns: number;
-    columnConfigs: ColumnConfigForm[];
+    columnConfigs: ColumnConfigModel[];
     header: boolean;
     footer: boolean;
     rotate: boolean;
@@ -23,7 +23,7 @@ export interface TableConfigForm {
     separator: string;
 }
 
-export interface DocEditorForms {
-    tableConfig: TableConfigForm;
+export interface DocEditorModels {
+    tableConfig: TableConfigModel;
 }
 

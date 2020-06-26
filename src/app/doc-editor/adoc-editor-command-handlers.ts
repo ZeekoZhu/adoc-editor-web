@@ -1,7 +1,7 @@
 import { caseWhen, Def, def } from '@elmish-ts/tagged-union';
 import { Ace, Range } from 'ace-builds';
 
-import { ColumnConfigForm, TableConfigForm } from './doc-editor-forms';
+import { ColumnConfigModel, TableConfigModel } from './doc-editor-forms';
 import { AdocEditorCommand, CheckList, ListType} from './adoc-editor-command';
 import Editor = Ace.Editor;
 
@@ -41,7 +41,7 @@ const headerHandler = (level: number) => (editor: Editor) => {
     editor.focus();
 };
 
-const formatColumn = (cfg: ColumnConfigForm) => {
+const formatColumn = (cfg: ColumnConfigModel) => {
     let result = '';
     // default horizontal alignment is left (<)
     if (cfg.hAlign !== '<') {
@@ -59,7 +59,7 @@ const formatColumn = (cfg: ColumnConfigForm) => {
     return result;
 };
 
-const formatColumns = (columnConfigs: ColumnConfigForm[]) => {
+const formatColumns = (columnConfigs: ColumnConfigModel[]) => {
     const map = new Map<string, number>();
     for (const cfg of columnConfigs) {
         const formatted = formatColumn(cfg);
@@ -80,7 +80,7 @@ const formatColumns = (columnConfigs: ColumnConfigForm[]) => {
     return distinct.join(', ');
 };
 
-const formatTableOptions = function* (cfg: TableConfigForm) {
+const formatTableOptions = function* (cfg: TableConfigModel) {
     if (cfg.rotate) {
         yield 'rotate';
     }
@@ -97,7 +97,7 @@ const formatTableOptions = function* (cfg: TableConfigForm) {
     }
 };
 
-const formatTableAttributes = function* (cfg: TableConfigForm) {
+const formatTableAttributes = function* (cfg: TableConfigModel) {
     yield `cols="${formatColumns(cfg.columnConfigs)}"`;
     const options = Array.from(formatTableOptions(cfg)).join(', ');
     yield `options="${options}"`;
@@ -115,7 +115,7 @@ const formatTableAttributes = function* (cfg: TableConfigForm) {
     }
 };
 
-const tableHandler = (tableConfig: TableConfigForm) => (editor: Editor) => {
+const tableHandler = (tableConfig: TableConfigModel) => (editor: Editor) => {
     const attr = `[${Array.from(formatTableAttributes(tableConfig)).join(', ')}]`;
     const snippet = `
 ${attr}
@@ -243,7 +243,7 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
         italic: () => inlineMarkHandler('__')(editor),
         braces: () => inlineMarkHandler('``')(editor),
         header: (level: number) => headerHandler(level)(editor),
-        table: (data: TableConfigForm) => tableHandler(data)(editor),
+        table: (data: TableConfigModel) => tableHandler(data)(editor),
         focus: () => editor.focus(),
         list: type => listHandler(type)(editor),
         listLevel: increase => changeListLevel(increase)(editor),

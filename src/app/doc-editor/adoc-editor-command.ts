@@ -1,5 +1,5 @@
 import { Def } from '@elmish-ts/tagged-union';
-import { TableConfigForm } from './doc-editor-forms';
+import { TableConfigModel } from './doc-editor-forms';
 
 interface ListBase {
     type: 'ul' | 'ol' | 'check';
@@ -25,7 +25,7 @@ export type AdocEditorCommand =
     | Def<'italic'>
     | Def<'braces'>
     | Def<'header', [ number ]>
-    | Def<'table', [ TableConfigForm ]>
+    | Def<'table', [ TableConfigModel ]>
     | Def<'list', [ ListType ]>
     | Def<'listLevel', [ boolean ]>
     | Def<'focus'>;

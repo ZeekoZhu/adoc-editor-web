@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ColumnConfigForm } from '@app/doc-editor/doc-editor-forms';
+import { ColumnConfigModel } from '@app/doc-editor/doc-editor-forms';
 
 @Component({
     selector: 'app-column-config-summary',
@@ -8,7 +8,7 @@ import { ColumnConfigForm } from '@app/doc-editor/doc-editor-forms';
 })
 export class ColumnConfigSummaryComponent implements OnInit {
 
-    @Input() colConfig: ColumnConfigForm;
+    @Input() colConfig: ColumnConfigModel;
     @Input() index: number;
     @Input() showInfo: boolean;
 
