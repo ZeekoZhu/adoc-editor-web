@@ -1,7 +1,7 @@
 import { DocEditorService } from '@app/doc-editor/store';
 import { def } from '@elmish-ts/tagged-union';
-import { Ace, edit, Range } from 'ace-builds';
-import { commandHandler } from '../../toolbar-command-handlers';
+import { Ace } from 'ace-builds';
+import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
 import Command = Ace.Command;
 import Editor = Ace.Editor;
 

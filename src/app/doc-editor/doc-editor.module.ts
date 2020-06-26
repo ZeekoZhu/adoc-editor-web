@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgModule } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {
@@ -29,6 +29,7 @@ import {
     TableConfigComponent,
     ToolbarItemComponent,
 } from '@app/doc-editor/components';
+import { DefaultDocEditorService, DocEditorServiceToken, DocEditorStore } from '@app/doc-editor/store';
 
 @NgModule({
     declarations: [
@@ -61,6 +62,9 @@ import {
         MatSelectModule,
         MatToolbarModule,
         ReactiveFormsModule,
+    ],
+    providers: [
+        { provide: DocEditorServiceToken, useFactory: () => new DefaultDocEditorService(inject(DocEditorStore), inject(MatDialog)) },
     ],
 })
 export class DocEditorModule {
