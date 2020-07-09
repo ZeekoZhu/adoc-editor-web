@@ -17,13 +17,20 @@ snippet pic
 `;
 
 export const addSnippets = (editor) => {
-    ace.config.loadModule('ace/ext/language_tools', m => {
-        editor.setOptions({
-            enableSnippets: true,
-        });
-        ace.config.loadModule('ace/snippets', x => {
-            const snippets = x.snippetManager.parseSnippetFile(snippetsDef);
-            x.snippetManager.register(snippets, 'asciidoctor');
-        });
-    });
+    return new Promise(((resolve, reject) => {
+        try {
+            ace.config.loadModule('ace/ext/language_tools', m => {
+                editor.setOptions({
+                    enableSnippets: true,
+                });
+                ace.config.loadModule('ace/snippets', x => {
+                    const snippets = x.snippetManager.parseSnippetFile(snippetsDef);
+                    x.snippetManager.register(snippets, 'asciidoctor');
+                    resolve();
+                });
+            });
+        } catch (e) {
+            reject(e);
+        }
+    }));
 };
