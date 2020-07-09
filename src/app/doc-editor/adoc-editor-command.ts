@@ -28,4 +28,5 @@ export type AdocEditorCommand =
     | Def<'table', [ TableConfigModel ]>
     | Def<'list', [ ListType ]>
     | Def<'listLevel', [ boolean ]>
+    | Def<'breakList'>
     | Def<'focus'>;

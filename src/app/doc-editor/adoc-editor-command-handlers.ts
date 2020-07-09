@@ -237,6 +237,19 @@ const changeListLevel = (increase: boolean) => editor => {
     modification.forEach(x => modifyList(x, editor));
 };
 
+const breakList = editor => {
+    const position = editor.getCursorPosition();
+    const { row } = position;
+    const line = editor.session.getLine(row);
+    const isEmptyList = (str: string) => {
+        return /^[-.*]+\s+$/.test(str) || /^\* \[[x* ]?]\s+$/.test(str);
+    };
+    if (isEmptyList(line)) {
+        editor.session.removeFullLines(row, row);
+    }
+    editor.session.getDocument().insertMergedLines(position, [ '', '', '' ]);
+};
+
 export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
     caseWhen(cmd, {
         bold: () => inlineMarkHandler('**')(editor),
@@ -247,5 +260,6 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
         focus: () => editor.focus(),
         list: type => listHandler(type)(editor),
         listLevel: increase => changeListLevel(increase)(editor),
+        breakList: () => breakList(editor)
     });
 };

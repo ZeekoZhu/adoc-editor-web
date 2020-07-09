@@ -73,16 +73,7 @@ const breakList: Command = {
         mac: 'shift+enter',
     },
     exec: editor => {
-        const position = editor.getCursorPosition();
-        const { row } = position;
-        const line = editor.session.getLine(row);
-        const isEmptyList = (str: string) => {
-            return /^[-.*]+\s+$/.test(str) || /^\* \[[x* ]?]\s+$/.test(str);
-        };
-        if (isEmptyList(line)) {
-            editor.session.removeFullLines(row, row);
-        }
-        editor.session.getDocument().insertMergedLines(position, [ '', '', '' ]);
+        commandHandler(def('breakList'), editor);
     },
 };
 
