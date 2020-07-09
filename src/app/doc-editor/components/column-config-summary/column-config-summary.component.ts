@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ColumnConfigModel } from '@app/doc-editor/doc-editor-forms';
+import { ColumnConfigModel } from '@app/doc-editor/doc-editor-models';
 
 @Component({
     selector: 'app-column-config-summary',

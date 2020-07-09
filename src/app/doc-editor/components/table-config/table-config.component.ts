@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DocEditorForms } from '@app/doc-editor/doc-editor-forms';
+import { DocEditorModels } from '@app/doc-editor/doc-editor-models';
 import { DocEditorService } from '@app/doc-editor/store';
 import { DocEditorServiceToken } from '@app/doc-editor/store/doc-editor.service';
 import { def } from '@elmish-ts/tagged-union';
@@ -133,7 +133,7 @@ export class TableConfigComponent implements OnInit, OnDestroy {
         @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
         public dialogRef: MatDialogRef<TableConfigComponent>,
         private fb: FormBuilder,
-        private fm: NgFormsManager<DocEditorForms>) {
+        private fm: NgFormsManager<DocEditorModels>) {
         this.initForm();
     }
 

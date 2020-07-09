@@ -1,7 +1,7 @@
 import { caseWhen, Def, def } from '@elmish-ts/tagged-union';
 import { Ace, Range } from 'ace-builds';
 
-import { ColumnConfigModel, TableConfigModel } from './doc-editor-forms';
+import { ColumnConfigModel, TableConfigModel } from './doc-editor-models';
 import { AdocEditorCommand, CheckList, ListType} from './adoc-editor-command';
 import Editor = Ace.Editor;
 
