@@ -5,10 +5,11 @@ import { commandHandler } from './adoc-editor-command-handlers';
 import { isEqual } from 'lodash-es';
 import 'ace-builds/webpack-resolver';
 import { addSnippets } from './components/adoc-editor/snippets';
+
 ace.config.setModuleUrl('ace/mode/asciidoctor',
     require('file-loader?esModule=false!./components/adoc-editor/asciidoctor-mode.js'));
 
-describe('bold', () => {
+describe('commands', () => {
     let editor: Ace.Editor;
     let editorHost: HTMLDivElement;
     beforeEach(async () => {
@@ -24,23 +25,66 @@ describe('bold', () => {
         await addSnippets(editor);
     });
 
-    describe('nothing selected', () => {
-        beforeEach(() => {
-            editor.focus();
-            editor.moveCursorTo(0, 0);
-            commandHandler(def('bold'), editor);
+    describe('bold', () => {
+
+        describe('nothing selected', () => {
+            beforeEach(() => {
+                editor.focus();
+                editor.moveCursorTo(0, 0);
+                commandHandler(def('bold'), editor);
+            });
+            it('should wrap cursor', () => {
+                const cursor = editor.getCursorPosition();
+                expect(isEqual(cursor, { row: 0, column: 2 })).toBe(true);
+            });
+            it('should create bold marks', () => {
+                const content = editor.session.getDocument().getAllLines().join('\n');
+                expect(content).toBe('****');
+            });
         });
-        it('should wrap cursor', () => {
-            const cursor = editor.getCursorPosition();
-            expect(isEqual(cursor, { row: 0, column: 2 }));
+
+        describe('select some text', () => {
+            beforeEach(() => {
+                editor.focus();
+                editor.setValue('2333');
+                editor.selectAll();
+                commandHandler(def('bold'), editor);
+            });
+
+            it('should wrap text', () => {
+                const content = editor.getValue();
+                expect(content).toBe('**2333**');
+            });
         });
-        it('should create bold marks', () => {
-            const content = editor.session.getDocument().getAllLines().join('\n');
-            expect(content).toBe('****');
+
+        afterEach(() => {
+            editor.destroy();
+            document.body.removeChild(editorHost);
         });
     });
-    afterEach(() => {
-        editor.destroy();
-        document.body.removeChild(editorHost);
+
+    describe('header', () => {
+
+        beforeEach(() => {
+            editor.setValue('2333');
+            editor.focus();
+            editor.moveCursorTo(0, 4);
+            commandHandler(def('header', 3), editor);
+        });
+
+        it('should add header mark', () => {
+            expect(editor.getValue()).toBe('==== 2333');
+        });
+
+        describe('then set header 2', () => {
+            beforeEach(() => {
+                commandHandler(def('header', 2), editor);
+            });
+            it('should remove mark', () => {
+                expect(editor.getValue()).toBe('=== 2333');
+            });
+        });
+
     });
 });
+
