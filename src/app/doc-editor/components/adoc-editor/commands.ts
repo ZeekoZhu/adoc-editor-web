@@ -1,3 +1,4 @@
+import { ListType } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorService } from '@app/doc-editor/store';
 import { def } from '@elmish-ts/tagged-union';
 import { Ace } from 'ace-builds';
@@ -84,7 +85,7 @@ const list: Command = {
         mac: 'cmd+1',
     },
     exec: editor => {
-        commandHandler(def('list', { type: 'ul', level: 1, mark: '*' }), editor);
+        commandHandler(def('list', ListType.ul(1)), editor);
     },
 };
 
@@ -95,7 +96,7 @@ const orderedList: Command = {
         mac: 'cmd+2',
     },
     exec: editor => {
-        commandHandler(def('list', { type: 'ol', level: 1, mark: '.' }), editor);
+        commandHandler(def('list', ListType.ol(1)), editor);
     },
 };
 
@@ -106,7 +107,7 @@ const checkList: Command = {
         mac: 'cmd+3',
     },
     exec: editor => {
-        commandHandler(def('list', { type: 'check', level: 1, mark: '*' }), editor);
+        commandHandler(def('list', ListType.check(1, false)), editor);
     },
 };
 

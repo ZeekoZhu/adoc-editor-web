@@ -139,14 +139,14 @@ const getListInfo = (line: string): ListType | null => {
     const mark = match[1][0];
     const level = match[1].length;
     if (mark === '.') {
-        return { type: 'ol', level, mark };
+        return ListType.ol(level, mark);
     }
     const checklistMatch = matchChecklistMark(match[2]);
     if (checklistMatch !== null) {
         const isChecked = checklistMatch[1] !== ' ';
-        return { type: 'check', level, mark, checked: isChecked };
+        return ListType.check(level, isChecked, mark);
     }
-    return { type: 'ul', level, mark };
+    return ListType.ul(level, mark);
 };
 
 const listHandler = (newList: ListType) => (editor: Editor) => {

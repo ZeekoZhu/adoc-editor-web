@@ -7,13 +7,25 @@ interface ListBase {
     mark: string;
 }
 
-export type OrderedList = ListBase;
+export interface OrderedList extends ListBase {
+    type: 'ol';
+    mark: '.' | string;
+}
 
-export type UnorderedList = ListBase ;
+export interface UnorderedList extends ListBase {
+    type: 'ul';
+    mark: '*' | string;
+}
 
 export interface CheckList extends ListBase {
     checked: boolean;
 }
+
+export const ListType = {
+    ul: (level: number, mark = '*'): UnorderedList => ({ type: 'ul', level, mark }),
+    ol: (level: number, mark = '.'): OrderedList => ({ type: 'ol', level, mark }),
+    check: (level: number, checked: boolean, mark = '*'): CheckList => ({ type: 'check', level, checked, mark }),
+};
 
 export type ListType =
     | OrderedList
