@@ -20,15 +20,15 @@
     </button>
 </mat-menu>
 <!-- marks menu -->
-<mat-menu #marksMenu="matMenu">
-    <button mat-menu-item>
-        <mat-icon svgIcon="format-underline"></mat-icon>
-    </button>
-    <button mat-menu-item>
-        <mat-icon svgIcon="pencil"></mat-icon>
-        Add more...
-    </button>
-</mat-menu>
+<!--<mat-menu #marksMenu="matMenu">-->
+<!--    <button mat-menu-item>-->
+<!--        <mat-icon svgIcon="format-underline"></mat-icon>-->
+<!--    </button>-->
+<!--    <button mat-menu-item>-->
+<!--        <mat-icon svgIcon="pencil"></mat-icon>-->
+<!--        Add more...-->
+<!--    </button>-->
+<!--</mat-menu>-->
 <!-- list menu -->
 <mat-menu #listMenu="matMenu">
     <button mat-menu-item (click)="execCmd(ul, focus)">
@@ -49,10 +49,10 @@
         icon="format-header-pound"
         [matMenuTriggerFor]="headingMenu"
     ></app-toolbar-item>
-    <app-toolbar-item
-        icon="marker"
-        [matMenuTriggerFor]="marksMenu"
-    ></app-toolbar-item>
+    <!--    <app-toolbar-item-->
+    <!--        icon="marker"-->
+    <!--        [matMenuTriggerFor]="marksMenu"-->
+    <!--    ></app-toolbar-item>-->
     <app-toolbar-item icon="table"
                       (click)="openTableConfig()">
     </app-toolbar-item>
