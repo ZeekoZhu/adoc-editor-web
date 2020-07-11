@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { def } from '@elmish-ts/tagged-union';
-import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
+import { AdocEditorCommand, ListType } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 
 @Component({
@@ -13,9 +13,14 @@ export class EditorToolbarComponent implements OnInit {
     italic = def('italic');
     braces = def('braces');
     headers = [ 0, 1, 2, 3, 4, 5 ].map(i => def('header', i));
+    // todo: why ul is Def<'list', [any]> ?
+    ul = def('list', ListType.ul(1)) as AdocEditorCommand;
+    ol = def('list', ListType.ol(1)) as AdocEditorCommand;
+    check = def('list', ListType.check(1, false)) as AdocEditorCommand;
+    focus = def('focus');
 
-    execCmd(cmd: AdocEditorCommand) {
-        this.docEditorSvc.executeCommand(cmd);
+    execCmd(...commands: AdocEditorCommand[]) {
+        commands.forEach(cmd => this.docEditorSvc.executeCommand(cmd));
     }
 
     async openTableConfig() {

@@ -31,13 +31,13 @@
 </mat-menu>
 <!-- list menu -->
 <mat-menu #listMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="execCmd(ul, focus)">
         <mat-icon svgIcon="format-list-bulleted"></mat-icon>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="execCmd(ol, focus)">
         <mat-icon svgIcon="format-list-numbered"></mat-icon>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="execCmd(check, focus)">
         <mat-icon svgIcon="format-list-checks"></mat-icon>
     </button>
 </mat-menu>
