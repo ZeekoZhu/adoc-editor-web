@@ -1,9 +1,26 @@
 <div class="editor-panel">
-    <div class="editor-panel__block editor-area">
-        <app-editor-toolbar
-            class="editor-area__tools">
-        </app-editor-toolbar>
-        <app-adoc-editor class="editor-area__editor"></app-adoc-editor>
+    <div class="editor-panel__side">
     </div>
-    <app-preview class="editor-panel__block"></app-preview>
+    <div class="editor-panel__center">
+        <div class="editor-panel__block editor-area">
+            <app-editor-toolbar
+                class="editor-area__tools">
+            </app-editor-toolbar>
+            <app-adoc-editor class="editor-area__editor"></app-adoc-editor>
+        </div>
+        <div [@previewOpenClose]="(showPreview$ | async) ? 'open' : 'closed'"
+             class="preview-area editor-panel__block">
+            <div class="preview-area__tools">
+                <div class="spacer"></div>
+                <app-toolbar-item class="preview-btn" icon="tray-minus" (click)="togglePreview()"></app-toolbar-item>
+            </div>
+            <div class="preview-area__content">
+                <div class="mask">
+                    <app-preview class="preview"></app-preview>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="editor-panel__side">
+    </div>
 </div>

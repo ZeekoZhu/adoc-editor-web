@@ -1,20 +1,14 @@
-import { Ace } from 'ace-builds';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { def } from '@elmish-ts/tagged-union';
-import { inject, Injectable, InjectionToken } from '@angular/core';
-
-import Editor = Ace.Editor;
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
-import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
-import { DocEditorStore } from './doc-editor.store';
-import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
-
-// export const DocEditorServiceToken = new InjectionToken('DocEditorService', {
-//     providedIn: 'root',
-//     factory: () => new DefaultDocEditorService(inject(DocEditorStore), inject(MatDialog)),
-// });
+import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
+import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
+import { def } from '@elmish-ts/tagged-union';
+import { Ace } from 'ace-builds';
+import { Subject } from 'rxjs';
+import { DocEditorStore } from './doc-editor.store';
+import Editor = Ace.Editor;
 
 @Injectable()
 export class DefaultDocEditorService implements DocEditorService {
@@ -36,6 +30,13 @@ export class DefaultDocEditorService implements DocEditorService {
 
     setContent(content: string) {
         this.store.update({ content });
+    }
+
+    togglePreview(showPreview?: boolean) {
+        if (showPreview === undefined) {
+            showPreview = !this.store.getValue().showPreview;
+        }
+        this.store.update({ showPreview });
     }
 
     openTableConfig() {

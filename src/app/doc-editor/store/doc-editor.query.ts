@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { debounceTime, flatMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, flatMap } from 'rxjs/operators';
 
 import { AdocService } from '../services';
 import { DocEditorStore, DocEditorState } from './doc-editor.store';
@@ -16,5 +16,9 @@ export class DocEditorQuery extends Query<DocEditorState> {
     renderResult$ = this.select('content').pipe(
         debounceTime(100),
         flatMap(x => this.adoc.convert(x)),
+    );
+
+    showPreview$ = this.select('showPreview').pipe(
+        distinctUntilChanged()
     );
 }

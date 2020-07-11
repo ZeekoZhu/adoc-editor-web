@@ -32,4 +32,7 @@ export class EditorToolbarComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    showPreview() {
+        this.docEditorSvc.togglePreview(true);
+    }
 }

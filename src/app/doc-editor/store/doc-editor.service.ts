@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
-import { Ace } from 'ace-builds';
-import Editor = Ace.Editor;
 
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
+import { Ace } from 'ace-builds';
+import Editor = Ace.Editor;
 
 export const DocEditorServiceToken = new InjectionToken('DocEditorService');
 export interface DocEditorService {
@@ -13,4 +13,6 @@ export interface DocEditorService {
     setContent(content: string): void;
 
     openTableConfig(): void;
+
+    togglePreview(showPreview?: boolean): void;
 }

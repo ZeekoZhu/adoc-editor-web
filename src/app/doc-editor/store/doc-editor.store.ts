@@ -3,11 +3,13 @@ import { Store, StoreConfig } from '@datorama/akita';
 
 export interface DocEditorState {
     content: string;
+    showPreview: boolean;
 }
 
 export function createInitialState(): DocEditorState {
     return {
         content: '',
+        showPreview: false
     };
 }
 
