@@ -20,6 +20,9 @@
                         "customWebpackConfig": {
                             "path": "./extra-webpack.config.js"
                         },
+                        "allowedCommonJsDependencies": [
+                            "ace-builds/webpack-resolver"
+                        ],
                         "outputPath": "dist/adoc-editor-web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
