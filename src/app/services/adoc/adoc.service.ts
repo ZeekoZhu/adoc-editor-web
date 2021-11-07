@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdocConverter } from '@app/doc-editor/services/adoc/adoc-converter';
+import { AdocConverter } from './adoc-converter';
 
 import asciidoctor from 'asciidoctor';
 
