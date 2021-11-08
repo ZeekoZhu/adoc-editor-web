@@ -18,7 +18,7 @@ import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
 })
 export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('editorContainer') editorContainer: ElementRef<HTMLDivElement>;
-    private unSub = new Subject();
+    private unSub = new Subject<undefined>();
     private editor: ace.Ace.Editor;
 
     bindOnChange() {
@@ -55,7 +55,7 @@ export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.unSub.next();
+        this.unSub.next(undefined);
         this.unSub.complete();
     }
 }

@@ -17,7 +17,7 @@ snippet pic
 `;
 
 export const addSnippets = (editor) => {
-    return new Promise(((resolve, reject) => {
+    return new Promise<void>(((resolve, reject) => {
         try {
             ace.config.loadModule('ace/ext/language_tools', m => {
                 editor.setOptions({
@@ -26,7 +26,7 @@ export const addSnippets = (editor) => {
                 ace.config.loadModule('ace/snippets', x => {
                     const snippets = x.snippetManager.parseSnippetFile(snippetsDef);
                     x.snippetManager.register(snippets, 'asciidoctor');
-                    resolve();
+                    resolve(undefined);
                 });
             });
         } catch (e) {
