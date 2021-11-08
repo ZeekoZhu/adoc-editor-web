@@ -1,8 +1,7 @@
-import { caseWhen, Def, def } from '@elmish-ts/tagged-union';
 import { Ace, Range } from 'ace-builds';
+import { AdocEditorCommand, CheckList, ListType } from './adoc-editor-command';
 
 import { ColumnConfigModel, TableConfigModel } from './doc-editor-models';
-import { AdocEditorCommand, CheckList, ListType} from './adoc-editor-command';
 import Editor = Ace.Editor;
 
 declare module 'ace-builds' {
@@ -60,24 +59,8 @@ const formatColumn = (cfg: ColumnConfigModel) => {
 };
 
 const formatColumns = (columnConfigs: ColumnConfigModel[]) => {
-    const map = new Map<string, number>();
-    for (const cfg of columnConfigs) {
-        const formatted = formatColumn(cfg);
-        if (map.has(formatted)) {
-            map.set(formatted, map.get(formatted) + 1);
-        } else {
-            map.set(formatted, 1);
-        }
-    }
-
-    const distinct =
-        Array.from(map.entries()).map(([ formatted, cnt ]) => {
-            if (cnt > 1) {
-                return `${cnt}*${formatted}`;
-            }
-            return formatted;
-        });
-    return distinct.join(', ');
+    // todo: merge same column configs
+    return columnConfigs.map(formatColumn).join(',');
 };
 
 const formatTableOptions = function* (cfg: TableConfigModel) {
@@ -153,16 +136,16 @@ const listHandler = (newList: ListType) => (editor: Editor) => {
     const { row } = editor.getCursorPosition();
     const line = editor.session.getLine(row);
     const originList = getListInfo(line);
-    const operations = [];
+    const operations: ListModification[] = [];
     if (originList === null) {
-        operations.push(def('add', newList));
+        operations.push({kind: 'add', list: newList});
     } else {
         if (newList.type === originList.type) {
             if (originList.type === 'check') {
                 const checkList = originList as CheckList;
                 operations.push(...replaceList(originList, { ...originList, checked: !checkList.checked }));
             } else {
-                operations.push(def('remove', originList));
+                operations.push({kind: 'remove', list: originList});
             }
         } else {
             operations.push(...replaceList(originList, newList));
@@ -172,8 +155,8 @@ const listHandler = (newList: ListType) => (editor: Editor) => {
 };
 
 type ListModification =
-    | Def<'add', [ ListType ]>
-    | Def<'remove', [ ListType ]>;
+    | { kind: 'add', list: ListType}
+    | { kind: 'remove', list: ListType};
 
 const toListString = (list: ListType): string => {
     let result = '';
@@ -208,17 +191,20 @@ const removeList = (editor: Editor) => {
 };
 
 const modifyList = (modification: ListModification, editor: Editor) => {
-    caseWhen(modification, {
-        add: list => addList(list, editor),
-        remove: () => removeList(editor),
-    });
+    switch (modification.kind) {
+        case 'add':
+            addList(modification.list, editor);
+            break;
+        case 'remove':
+            removeList(editor);
+            break;
+    }
 };
 
-const replaceList = (originList: ListType, newList: ListType): ListModification[] => {
-    return [ def('remove', originList), def('add', newList) ];
-};
+const replaceList = (originList: ListType, newList: ListType): ListModification[] =>
+    [{kind: 'remove', list: originList}, {kind: 'add', list: newList}];
 
-const changeListLevel = (increase: boolean) => editor => {
+const changeListLevel = (increase: boolean) => (editor: Ace.Editor) => {
     const position = editor.getCursorPosition();
     const { row } = position;
     const line = editor.session.getLine(row);
@@ -228,22 +214,20 @@ const changeListLevel = (increase: boolean) => editor => {
     }
     const modification: ListModification[] = [];
 
-    const newList = { ...originList, level: originList.level + (increase ? 1 : -1) };
+    const newList = { ...originList, level: originList.level + (increase ? 1 : -1) } as ListType;
     if (newList.level === 0) {
-        modification.push(def('remove', originList));
+        modification.push({kind: 'remove', list: originList});
     } else {
         modification.push(...replaceList(originList, newList));
     }
     modification.forEach(x => modifyList(x, editor));
 };
 
-const breakList = editor => {
+const breakList = (editor: Ace.Editor) => {
     const position = editor.getCursorPosition();
     const { row } = position;
     const line = editor.session.getLine(row);
-    const isEmptyList = (str: string) => {
-        return /^[-.*]+\s+$/.test(str) || /^\* \[[x* ]?]\s+$/.test(str);
-    };
+    const isEmptyList = (str: string) => /^[-.*]+\s+$/.test(str) || /^\* \[[x* ]?]\s+$/.test(str);
     if (isEmptyList(line)) {
         editor.session.removeFullLines(row, row);
     }
@@ -251,15 +235,32 @@ const breakList = editor => {
 };
 
 export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
-    caseWhen(cmd, {
-        bold: () => inlineMarkHandler('**')(editor),
-        italic: () => inlineMarkHandler('__')(editor),
-        braces: () => inlineMarkHandler('``')(editor),
-        header: (level: number) => headerHandler(level)(editor),
-        table: (data: TableConfigModel) => tableHandler(data)(editor),
-        focus: () => editor.focus(),
-        list: type => listHandler(type)(editor),
-        listLevel: increase => changeListLevel(increase)(editor),
-        breakList: () => breakList(editor)
-    });
+    switch (cmd.kind) {
+        case 'bold':
+            inlineMarkHandler('**')(editor);
+            break;
+        case 'italic':
+            inlineMarkHandler('__')(editor);
+            break;
+        case 'braces':
+            inlineMarkHandler('``')(editor);
+            break;
+        case 'header':
+            headerHandler(cmd.level)(editor);
+            break;
+        case 'table':
+            tableHandler(cmd.config)(editor);
+            break;
+        case 'focus':
+            editor.focus();
+            break;
+        case 'list':
+            listHandler(cmd.list)(editor);
+            break;
+        case 'listLevel':
+            changeListLevel(cmd.increase)(editor);
+            break;
+        case 'breakList':
+            breakList(editor);
+    }
 };

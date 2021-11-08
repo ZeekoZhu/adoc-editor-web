@@ -1,8 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Inject, OnInit } from '@angular/core';
-import { DocEditorQuery, DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
-import { def } from '@elmish-ts/tagged-union';
+import { DocEditorQuery, DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -65,10 +64,8 @@ export class EditorPanelComponent implements OnInit {
 
     ngOnInit(): void {
         this.showPreview$.pipe(
-            filter(x => x === false)
-        ).subscribe(() => {
-            this.docEditorSvc.executeCommand(def('focus'));
-        });
+            filter(x => !x)
+        ).subscribe(() => this.docEditorSvc.executeCommand({ kind: 'focus' }));
     }
 
 }

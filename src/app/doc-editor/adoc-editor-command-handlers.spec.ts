@@ -1,4 +1,3 @@
-import { def } from '@elmish-ts/tagged-union';
 import { Ace } from 'ace-builds';
 import * as ace from 'ace-builds';
 import { commandHandler } from './adoc-editor-command-handlers';
@@ -31,7 +30,7 @@ describe('commands', () => {
             beforeEach(() => {
                 editor.focus();
                 editor.moveCursorTo(0, 0);
-                commandHandler(def('bold'), editor);
+                commandHandler({ kind: 'bold' }, editor);
             });
             it('should wrap cursor', () => {
                 const cursor = editor.getCursorPosition();
@@ -48,7 +47,7 @@ describe('commands', () => {
                 editor.focus();
                 editor.setValue('2333');
                 editor.selectAll();
-                commandHandler(def('bold'), editor);
+                commandHandler({ kind: 'bold' }, editor);
             });
 
             it('should wrap text', () => {
@@ -69,7 +68,7 @@ describe('commands', () => {
             editor.setValue('2333');
             editor.focus();
             editor.moveCursorTo(0, 4);
-            commandHandler(def('header', 3), editor);
+            commandHandler({ kind: 'header', level: 3 }, editor);
         });
 
         it('should add header mark', () => {
@@ -78,7 +77,7 @@ describe('commands', () => {
 
         describe('then set header 2', () => {
             beforeEach(() => {
-                commandHandler(def('header', 2), editor);
+                commandHandler({ kind: 'header', level: 2 }, editor);
             });
             it('should remove mark', () => {
                 expect(editor.getValue()).toBe('=== 2333');

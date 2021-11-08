@@ -1,4 +1,3 @@
-import { Def } from '@elmish-ts/tagged-union';
 import { TableConfigModel } from './doc-editor-models';
 
 interface ListBase {
@@ -33,12 +32,12 @@ export type ListType =
     | CheckList;
 
 export type AdocEditorCommand =
-    | Def<'bold'>
-    | Def<'italic'>
-    | Def<'braces'>
-    | Def<'header', [ number ]>
-    | Def<'table', [ TableConfigModel ]>
-    | Def<'list', [ ListType ]>
-    | Def<'listLevel', [ boolean ]>
-    | Def<'breakList'>
-    | Def<'focus'>;
+    | { kind: 'bold' }
+    | { kind: 'italic' }
+    | { kind: 'braces' }
+    | { kind: 'focus' }
+    | { kind: 'header', level: number }
+    | { kind: 'list', list: ListType }
+    | { kind: 'table', config: TableConfigModel }
+    | { kind: 'listLevel' , increase: boolean }
+    | { kind: 'breakList' };

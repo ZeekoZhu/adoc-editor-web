@@ -15,10 +15,10 @@ export class AdocService {
     constructor() {
         const tasks = this.tasks;
         if (typeof Worker !== 'undefined') {
-            this.worker = new Worker('./adoc.worker', { type: 'module' });
+            this.worker = new Worker(new URL('./adoc.worker', import.meta.url));
             this.worker.onmessage = ({ data }) => {
                 const { id, response } = data;
-                tasks.get(id)(response);
+                tasks.get(id)?.(response);
                 tasks.delete(id);
             };
 

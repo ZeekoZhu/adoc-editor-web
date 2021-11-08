@@ -1,6 +1,5 @@
 import { ListType } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorService } from '@app/doc-editor/store';
-import { def } from '@elmish-ts/tagged-union';
 import { Ace } from 'ace-builds';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
 import Command = Ace.Command;
@@ -14,7 +13,7 @@ const insertHeader = (level: number): Command => {
             mac: 'option+' + level,
         },
         exec: editor => {
-            commandHandler(def('header', level - 1), editor);
+            commandHandler({ kind: 'header', level: level - 1 }, editor);
         },
     };
 };
@@ -28,7 +27,7 @@ const bold: Command = {
         mac: 'cmd+b',
     },
     exec: editor => {
-        commandHandler(def('bold'), editor);
+        commandHandler({ kind: 'bold' }, editor);
     },
 };
 
@@ -39,7 +38,7 @@ const italic: Command = {
         mac: 'cmd+i',
     },
     exec: editor => {
-        commandHandler(def('italic'), editor);
+        commandHandler({ kind: 'italic' }, editor);
     },
 };
 
@@ -50,7 +49,7 @@ const braces: Command = {
         mac: 'cmd+k',
     },
     exec: editor => {
-        commandHandler(def('braces'), editor);
+        commandHandler({ kind: 'braces' }, editor);
     },
 };
 
@@ -74,7 +73,7 @@ const breakList: Command = {
         mac: 'shift+enter',
     },
     exec: editor => {
-        commandHandler(def('breakList'), editor);
+        commandHandler({ kind: 'breakList' }, editor);
     },
 };
 
@@ -85,7 +84,7 @@ const list: Command = {
         mac: 'cmd+1',
     },
     exec: editor => {
-        commandHandler(def('list', ListType.ul(1)), editor);
+        commandHandler({ kind: 'list', list: ListType.ul(1) }, editor);
     },
 };
 
@@ -96,7 +95,7 @@ const orderedList: Command = {
         mac: 'cmd+2',
     },
     exec: editor => {
-        commandHandler(def('list', ListType.ol(1)), editor);
+        commandHandler({ kind: 'list', list: ListType.ol(1) }, editor);
     },
 };
 
@@ -107,7 +106,7 @@ const checkList: Command = {
         mac: 'cmd+3',
     },
     exec: editor => {
-        commandHandler(def('list', ListType.check(1, false)), editor);
+        commandHandler({ kind: 'list', list: ListType.check(1, false) }, editor);
     },
 };
 
@@ -117,7 +116,8 @@ const increaseListLevel: Command = {
         win: 'ctrl+]',
         mac: 'cmd+]',
     },
-    exec: editor => commandHandler(def('listLevel', true), editor),
+    // exec: editor => commandHandler(def('listLevel', true), editor),
+    exec: editor => commandHandler({ kind: 'listLevel', increase: true }, editor),
 };
 
 const decreaseListLevel: Command = {
@@ -126,7 +126,7 @@ const decreaseListLevel: Command = {
         win: 'ctrl+[',
         mac: 'cmd+[',
     },
-    exec: editor => commandHandler(def('listLevel', false), editor),
+    exec: editor => commandHandler({ kind: 'listLevel', increase: false }, editor),
 };
 
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);

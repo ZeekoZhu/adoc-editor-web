@@ -1,3 +1,4 @@
+import { Ace } from 'ace-builds';
 import * as ace from 'ace-builds';
 
 const snippetsDef = `
@@ -16,7 +17,7 @@ snippet pic
 	image::\${1:url}[\${2:alt}]
 `;
 
-export const addSnippets = (editor) => {
+export const addSnippets = (editor: Ace.Editor) => {
     return new Promise<void>(((resolve, reject) => {
         try {
             ace.config.loadModule('ace/ext/language_tools', m => {

@@ -26,7 +26,7 @@ export class TableConfigComponent implements OnInit, OnDestroy {
     }
 
     colConfigAt(index: number) {
-        return this.tableConfigForm.get([ 'columnConfigs', index ]).value;
+        return this.tableConfigForm.get([ 'columnConfigs', index ])?.value;
     }
 
     createColumnConfigControl() {
@@ -123,8 +123,10 @@ export class TableConfigComponent implements OnInit, OnDestroy {
 
     close(isOk: boolean) {
         if (isOk) {
-            const data = this.fm.getControl('tableConfig').rawValue;
-            this.docEditorSvc.executeCommand(def('table', data));
+            const data = this.fm.getControl('tableConfig')?.rawValue;
+            if (data) {
+                this.docEditorSvc.executeCommand({ kind: 'table', config: data });
+            }
         }
         this.dialogRef.close();
     }

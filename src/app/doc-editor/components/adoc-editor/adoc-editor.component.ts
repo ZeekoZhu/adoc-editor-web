@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { asyncScheduler, fromEvent, Subject } from 'rxjs';
+import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 import { map, takeUntil, throttleTime } from 'rxjs/operators';
 import * as ace from 'ace-builds';
-import 'ace-builds/webpack-resolver';
+// todo: import ace editor modes
+// import 'ace-builds/webpack-resolver';
 
-ace.config.setModuleUrl('ace/mode/asciidoctor',
-    require('file-loader?esModule=false!./asciidoctor-mode.js'));
+// ace.config.setModuleUrl('ace/mode/asciidoctor',
+//     new URL('./asciidoctor-mode.js', import.meta.url));
 
 import { addSnippets } from '@app/doc-editor/components/adoc-editor/snippets';
 import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
@@ -22,7 +24,7 @@ export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private editor: ace.Ace.Editor;
 
     bindOnChange() {
-        const changes$ = fromEvent(this.editor, 'change');
+        const changes$ = fromEvent(this.editor as FromEventTarget<void>, 'change');
         changes$.pipe(
             throttleTime(100, asyncScheduler, {
                 leading: true, trailing: true,

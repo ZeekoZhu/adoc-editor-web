@@ -4,7 +4,6 @@ import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
 import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
 import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
-import { def } from '@elmish-ts/tagged-union';
 import { Ace } from 'ace-builds';
 import { Subject } from 'rxjs';
 import { DocEditorStore } from './doc-editor.store';
@@ -42,7 +41,7 @@ export class DefaultDocEditorService implements DocEditorService {
     openTableConfig() {
         const ref = this.dialog.open(TableConfigComponent, {});
         ref.afterClosed().subscribe(() => {
-            this.adocEditorCommands$.next(def('focus'));
+            this.adocEditorCommands$.next({ kind: 'focus' });
         });
     }
 

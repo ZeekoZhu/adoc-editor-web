@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdocService } from '@app/services/adoc/adoc.service';
 
 @Component({
     selector: 'app-preview',
@@ -6,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: [ './preview.component.less' ],
 })
 export class PreviewComponent implements OnInit {
-
-    constructor() { }
+    constructor(private adocService: AdocService) { }
 
     ngOnInit(): void {
     }
