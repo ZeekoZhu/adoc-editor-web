@@ -1,3 +1,4 @@
+/// <reference lib="webworker" />
 importScripts('/assets/asciidoctor.min.js');
 import { AdocConverter } from './adoc-converter';
 // @ts-ignore

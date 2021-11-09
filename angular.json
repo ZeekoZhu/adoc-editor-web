@@ -42,6 +42,9 @@
             "styles": [
               "src/styles.less"
             ],
+            "scripts": [
+              "./node_modules/@asciidoctor/core/dist/browser/asciidoctor.min.js"
+            ],
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
@@ -55,7 +58,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

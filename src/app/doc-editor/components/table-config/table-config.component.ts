@@ -4,7 +4,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DocEditorModels } from '@app/doc-editor/doc-editor-models';
 import { DocEditorService } from '@app/doc-editor/store';
 import { DocEditorServiceToken } from '@app/doc-editor/store/doc-editor.service';
-import { def } from '@elmish-ts/tagged-union';
 import { NgFormsManager } from '@ngneat/forms-manager';
 import { filter, map } from 'rxjs/operators';
 

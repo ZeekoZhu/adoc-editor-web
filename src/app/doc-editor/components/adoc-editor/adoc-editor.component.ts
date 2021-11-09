@@ -4,11 +4,10 @@ import { asyncScheduler, fromEvent, Subject } from 'rxjs';
 import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 import { map, takeUntil, throttleTime } from 'rxjs/operators';
 import * as ace from 'ace-builds';
-// todo: import ace editor modes
-// import 'ace-builds/webpack-resolver';
+import '../../../../utils/ace-webpack-resolver';
 
-// ace.config.setModuleUrl('ace/mode/asciidoctor',
-//     new URL('./asciidoctor-mode.js', import.meta.url));
+ace.config.setModuleUrl('ace/mode/asciidoctor',
+    new URL('./asciidoctor-mode.js', import.meta.url));
 
 import { addSnippets } from '@app/doc-editor/components/adoc-editor/snippets';
 import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';

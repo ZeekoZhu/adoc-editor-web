@@ -2,11 +2,11 @@ import { Ace } from 'ace-builds';
 import * as ace from 'ace-builds';
 import { commandHandler } from './adoc-editor-command-handlers';
 import { isEqual } from 'lodash-es';
-import 'ace-builds/webpack-resolver';
+// import 'ace-builds/webpack-resolver';
 import { addSnippets } from './components/adoc-editor/snippets';
 
-ace.config.setModuleUrl('ace/mode/asciidoctor',
-    require('file-loader?esModule=false!./components/adoc-editor/asciidoctor-mode.js'));
+// ace.config.setModuleUrl('ace/mode/asciidoctor',
+//     require('file-loader?esModule=false!./components/adoc-editor/asciidoctor-mode.js'));
 
 describe('commands', () => {
     let editor: Ace.Editor;

@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, Inject, OnInit } from '@angular/core';
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorQuery, DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
+import { AdocService } from '@app/services/adoc/adoc.service';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -49,6 +50,7 @@ import { filter } from 'rxjs/operators';
 export class EditorPanelComponent implements OnInit {
 
     constructor(
+        @Inject(AdocService) private adocSvc: AdocService,
         @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
         private docEditorQuery: DocEditorQuery) { }
 
@@ -64,7 +66,7 @@ export class EditorPanelComponent implements OnInit {
 
     ngOnInit(): void {
         this.showPreview$.pipe(
-            filter(x => !x)
+            filter(x => !x),
         ).subscribe(() => this.docEditorSvc.executeCommand({ kind: 'focus' }));
     }
 
