@@ -6,7 +6,7 @@ import '~/utils/ace-webpack-resolver';
 import { addSnippets } from './components/adoc-editor/snippets';
 
 ace.config.setModuleUrl('ace/mode/asciidoctor',
-    new URL('./asciidoctor-mode.js', import.meta.url));
+    new URL('~/utils/asciidoctor-mode.js', import.meta.url));
 
 describe('commands', () => {
     let editor: Ace.Editor;
