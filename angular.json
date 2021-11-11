@@ -48,6 +48,14 @@
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -75,7 +83,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -85,8 +94,12 @@
           "configurations": {
             "production": {
               "browserTarget": "adoc-editor-web:build:production"
+            },
+            "development": {
+              "browserTarget": "adoc-editor-web:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
