@@ -29,6 +29,7 @@ import {
     ToolbarItemComponent,
 } from '@app/doc-editor/components';
 import { DefaultDocEditorService, DocEditorServiceToken, DocEditorStore } from '@app/doc-editor/store';
+import { PreviewModule } from '@app/preview/preview.module';
 
 @NgModule({
     declarations: [
@@ -60,6 +61,7 @@ import { DefaultDocEditorService, DocEditorServiceToken, DocEditorStore } from '
         MatSelectModule,
         MatToolbarModule,
         ReactiveFormsModule,
+        PreviewModule,
     ],
     providers: [
         { provide: DocEditorServiceToken, useFactory: () => new DefaultDocEditorService(inject(DocEditorStore), inject(MatDialog)) },

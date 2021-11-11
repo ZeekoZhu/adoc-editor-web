@@ -3,22 +3,41 @@ import { Store, StoreConfig } from '@datorama/akita';
 
 export interface DocEditorState {
     content: string;
-    showPreview: boolean;
+    ui: {
+        showPreview: boolean;
+    };
 }
 
 export function createInitialState(): DocEditorState {
     return {
         content: '',
-        showPreview: false
+        ui: {
+            showPreview: false,
+        },
     };
 }
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'doc-editor' })
 export class DocEditorStore extends Store<DocEditorState> {
-
     constructor() {
         super(createInitialState());
+    }
+
+    togglePreview(showPreview?: boolean) {
+        if (showPreview != null) {
+            this.update({
+                ui: {
+                    showPreview: showPreview,
+                },
+            });
+        } else {
+            this.update({
+                ui: {
+                    showPreview: !this.getValue().ui.showPreview,
+                },
+            });
+        }
     }
 
 }

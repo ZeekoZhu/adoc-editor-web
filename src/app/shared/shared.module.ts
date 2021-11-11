@@ -5,11 +5,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { PageNotFoundComponent } from './components/';
 import { FormsModule } from '@angular/forms';
+import { SafeDomPipe } from './pipes/safe-dom.pipe';
 
 @NgModule({
-  declarations: [ PageNotFoundComponent ],
+  declarations: [ PageNotFoundComponent, SafeDomPipe ],
   imports: [ CommonModule, TranslateModule, FormsModule ],
-  exports: [ TranslateModule, FormsModule ],
+    exports: [ TranslateModule, FormsModule, SafeDomPipe ],
 })
 export class SharedModule {
 }

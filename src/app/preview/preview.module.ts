@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import { PreviewComponent } from './preview/preview.component';
-
-const routes: Routes = [
-    {
-        path: '*',
-        component: PreviewComponent,
-    },
-];
+import { SharedModule } from '@app/shared';
 
 @NgModule({
     declarations: [ PreviewComponent ],
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        SharedModule,
+    ],
+    exports: [
+        PreviewComponent,
     ],
 })
 export class PreviewModule {

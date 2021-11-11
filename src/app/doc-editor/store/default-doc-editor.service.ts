@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
-import { TableConfigComponent } from '@app/doc-editor/components/table-config/table-config.component';
+import { TableConfigComponent } from '@app/doc-editor/components/adoc-table/table-config/table-config.component';
 import { DocEditorService } from '@app/doc-editor/store/doc-editor.service';
 import { Ace } from 'ace-builds';
 import { Subject } from 'rxjs';
 import { DocEditorStore } from './doc-editor.store';
 import Editor = Ace.Editor;
 
+/**
+ * execute adoc editor command to the ace editor
+ */
 @Injectable()
 export class DefaultDocEditorService implements DocEditorService {
     protected initialized = false;
@@ -32,10 +35,7 @@ export class DefaultDocEditorService implements DocEditorService {
     }
 
     togglePreview(showPreview?: boolean) {
-        if (showPreview === undefined) {
-            showPreview = !this.store.getValue().showPreview;
-        }
-        this.store.update({ showPreview });
+        this.store.togglePreview(showPreview);
     }
 
     openTableConfig() {

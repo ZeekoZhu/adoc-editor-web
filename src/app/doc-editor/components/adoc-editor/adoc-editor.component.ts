@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { asyncScheduler, fromEvent, Subject } from 'rxjs';
 import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
@@ -7,7 +7,7 @@ import * as ace from 'ace-builds';
 import '../../../../utils/ace-webpack-resolver';
 
 ace.config.setModuleUrl('ace/mode/asciidoctor',
-    new URL('./asciidoctor-mode.js', import.meta.url));
+    new URL('~/utils/asciidoctor-mode.js', import.meta.url));
 
 import { addSnippets } from '@app/doc-editor/components/adoc-editor/snippets';
 import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
@@ -17,7 +17,7 @@ import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
     templateUrl: './adoc-editor.component.html',
     styleUrls: [ './adoc-editor.component.less' ],
 })
-export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdocEditorComponent implements  AfterViewInit, OnDestroy {
     @ViewChild('editorContainer') editorContainer: ElementRef<HTMLDivElement>;
     private unSub = new Subject<undefined>();
     private editor: ace.Ace.Editor;
@@ -36,9 +36,6 @@ export class AdocEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {
-    }
-
-    ngOnInit(): void {
     }
 
     ngAfterViewInit(): void {

@@ -11,7 +11,11 @@ export class DocEditorQuery extends Query<DocEditorState> {
         super(store);
     }
 
-    showPreview$ = this.select('showPreview').pipe(
+    showPreview$ = this.select(it => it.ui.showPreview).pipe(
         distinctUntilChanged(),
     );
+
+    get content() {
+        return this.getValue().content;
+    }
 }

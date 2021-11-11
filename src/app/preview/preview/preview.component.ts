@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdocService } from '@app/services/adoc/adoc.service';
+import { PreviewService } from '@app/preview/preview.service';
 
 @Component({
     selector: 'app-preview',
@@ -7,6 +7,9 @@ import { AdocService } from '@app/services/adoc/adoc.service';
     styleUrls: [ './preview.component.less' ],
 })
 export class PreviewComponent {
-    constructor(private adocService: AdocService) { }
+    constructor(private previewSvc: PreviewService) {}
 
+    get preview() {
+        return this.previewSvc.renderedContent$;
+    }
 }
