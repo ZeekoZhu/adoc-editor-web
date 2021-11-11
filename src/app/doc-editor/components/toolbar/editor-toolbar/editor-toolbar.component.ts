@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AdocEditorCommand, ListType } from '@app/doc-editor/adoc-editor-command';
-import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
+import { EditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
 
 @Component({
     selector: 'app-editor-toolbar',
@@ -25,9 +25,10 @@ export class EditorToolbarComponent  {
         this.docEditorSvc.openTableConfig();
     }
 
-    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {}
+    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: EditorService,
+                private editorStore: EditorStore) {}
 
     showPreview() {
-        this.docEditorSvc.togglePreview(true);
+        this.editorStore.togglePreview(true);
     }
 }

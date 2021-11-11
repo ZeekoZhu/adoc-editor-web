@@ -28,7 +28,7 @@ import {
     TableConfigComponent,
     ToolbarItemComponent,
 } from '@app/doc-editor/components';
-import { DefaultDocEditorService, DocEditorServiceToken, DocEditorStore } from '@app/doc-editor/store';
+import { AceEditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
 import { PreviewModule } from '@app/preview/preview.module';
 
 @NgModule({
@@ -64,7 +64,10 @@ import { PreviewModule } from '@app/preview/preview.module';
         PreviewModule,
     ],
     providers: [
-        { provide: DocEditorServiceToken, useFactory: () => new DefaultDocEditorService(inject(DocEditorStore), inject(MatDialog)) },
+        {
+            provide: DocEditorServiceToken,
+            useFactory: () => new AceEditorService(inject(EditorStore), inject(MatDialog)),
+        },
     ],
 })
 export class DocEditorModule {

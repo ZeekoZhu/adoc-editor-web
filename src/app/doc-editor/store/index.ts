@@ -1,5 +1,5 @@
 // barrels
-export * from './default-doc-editor.service';
-export * from './doc-editor.query';
-export * from './doc-editor.service';
-export * from './doc-editor.store';
+export * from './ace-editor.service';
+export * from './editor-query.service';
+export * from './editor.service';
+export * from './editor-store.service';

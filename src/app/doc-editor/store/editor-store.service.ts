@@ -19,9 +19,13 @@ export function createInitialState(): DocEditorState {
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'doc-editor' })
-export class DocEditorStore extends Store<DocEditorState> {
+export class EditorStore extends Store<DocEditorState> {
     constructor() {
         super(createInitialState());
+    }
+
+    setContent(content: string) {
+        this.update({ content });
     }
 
     togglePreview(showPreview?: boolean) {

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { DocEditorState, DocEditorStore } from './doc-editor.store';
+import { DocEditorState, EditorStore } from './editor-store.service';
 
 @Injectable({ providedIn: 'root' })
-export class DocEditorQuery extends Query<DocEditorState> {
+export class EditorQuery extends Query<DocEditorState> {
 
-    constructor(protected override store: DocEditorStore) {
+    constructor(protected override store: EditorStore) {
         super(store);
     }
 

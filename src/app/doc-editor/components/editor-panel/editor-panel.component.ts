@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
-import { DocEditorQuery, DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
+import { EditorQuery, EditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
 import { AdocService } from '@app/services/adoc/adoc.service';
 import { filter } from 'rxjs/operators';
 import { PreviewService } from '@app/preview/preview.service';
@@ -52,19 +52,20 @@ export class EditorPanelComponent implements OnInit {
 
     constructor(
         @Inject(AdocService) private adocSvc: AdocService,
-        @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
+        @Inject(DocEditorServiceToken) private docEditorSvc: EditorService,
         private previewSvc: PreviewService,
-        private docEditorQuery: DocEditorQuery) { }
+        private editorStore: EditorStore,
+        private editorQuery: EditorQuery) { }
 
-    showPreview$ = this.docEditorQuery.showPreview$;
+    showPreview$ = this.editorQuery.showPreview$;
 
     executeToolbarCommand(cmd: AdocEditorCommand) {
         this.docEditorSvc.executeCommand(cmd);
     }
 
     togglePreview() {
-        this.docEditorSvc.togglePreview();
-        this.previewSvc.scheduleRender(this.docEditorQuery.content);
+        this.editorStore.togglePreview();
+        this.previewSvc.scheduleRender(this.editorQuery.content);
     }
 
     ngOnInit(): void {

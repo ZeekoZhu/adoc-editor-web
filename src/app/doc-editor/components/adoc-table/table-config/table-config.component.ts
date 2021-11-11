@@ -2,8 +2,8 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DocEditorModels } from '@app/doc-editor/doc-editor-models';
-import { DocEditorService } from '@app/doc-editor/store';
-import { DocEditorServiceToken } from '@app/doc-editor/store/doc-editor.service';
+import { EditorService } from '@app/doc-editor/store';
+import { DocEditorServiceToken } from '@app/doc-editor/store/editor.service';
 import { NgFormsManager } from '@ngneat/forms-manager';
 import { filter, map } from 'rxjs/operators';
 
@@ -124,14 +124,14 @@ export class TableConfigComponent implements OnInit, OnDestroy {
         if (isOk) {
             const data = this.fm.getControl('tableConfig')?.rawValue;
             if (data) {
-                this.docEditorSvc.executeCommand({ kind: 'table', config: data });
+                this.editorSvc.executeCommand({ kind: 'table', config: data });
             }
         }
         this.dialogRef.close();
     }
 
     constructor(
-        @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
+        @Inject(DocEditorServiceToken) private editorSvc: EditorService,
         public dialogRef: MatDialogRef<TableConfigComponent>,
         private fb: FormBuilder,
         private fm: NgFormsManager<DocEditorModels>) {

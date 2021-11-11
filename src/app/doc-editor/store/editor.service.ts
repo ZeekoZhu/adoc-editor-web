@@ -5,14 +5,14 @@ import { Ace } from 'ace-builds';
 import Editor = Ace.Editor;
 
 export const DocEditorServiceToken = new InjectionToken('DocEditorService');
-export interface DocEditorService {
+
+/**
+ * service to execute commands on the editor
+ */
+export interface EditorService {
     executeCommand(cmd: AdocEditorCommand): void;
 
     initialize(editor: Editor): void;
 
-    setContent(content: string): void;
-
     openTableConfig(): void;
-
-    togglePreview(showPreview?: boolean): void;
 }

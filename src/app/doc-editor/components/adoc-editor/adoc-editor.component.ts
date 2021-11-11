@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
+import { EditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
 import { asyncScheduler, fromEvent, Subject } from 'rxjs';
 import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 import { map, takeUntil, throttleTime } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { bindCommands } from '@app/doc-editor/components/adoc-editor/commands';
     templateUrl: './adoc-editor.component.html',
     styleUrls: [ './adoc-editor.component.less' ],
 })
-export class AdocEditorComponent implements  AfterViewInit, OnDestroy {
+export class AdocEditorComponent implements AfterViewInit, OnDestroy {
     @ViewChild('editorContainer') editorContainer: ElementRef<HTMLDivElement>;
     private unSub = new Subject<undefined>();
     private editor: ace.Ace.Editor;
@@ -31,11 +31,12 @@ export class AdocEditorComponent implements  AfterViewInit, OnDestroy {
             map(() => this.editor.getValue()),
             takeUntil(this.unSub),
         ).subscribe(content => {
-            this.docEditorSvc.setContent(content);
+            this.editorStore.setContent(content);
         });
     }
 
-    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {
+    constructor(@Inject(DocEditorServiceToken) private docEditorSvc: EditorService,
+                private editorStore: EditorStore) {
     }
 
     ngAfterViewInit(): void {

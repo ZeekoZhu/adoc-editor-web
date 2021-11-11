@@ -1,5 +1,5 @@
 import { ListType } from '@app/doc-editor/adoc-editor-command';
-import { DocEditorService } from '@app/doc-editor/store';
+import { EditorService } from '@app/doc-editor/store';
 import { Ace } from 'ace-builds';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
 import Command = Ace.Command;
@@ -18,7 +18,7 @@ const insertHeader = (level: number): Command => {
     };
 };
 
-type AdocEditorCommand = (editorSvc: DocEditorService) => Command;
+type AdocEditorCommand = (editorSvc: EditorService) => Command;
 
 const bold: Command = {
     name: 'format-bold',
@@ -135,7 +135,7 @@ export const commands: (AdocEditorCommand | Command)[] = [
     openTableConfig, breakList, list, orderedList, checkList,
     increaseListLevel, decreaseListLevel,
 ];
-export const bindCommands = (editor: Editor, editorSvc: DocEditorService) => {
+export const bindCommands = (editor: Editor, editorSvc: EditorService) => {
     commands.forEach(cmd => {
         if (typeof (cmd) === 'function') {
             editor.commands.addCommand(cmd(editorSvc));
