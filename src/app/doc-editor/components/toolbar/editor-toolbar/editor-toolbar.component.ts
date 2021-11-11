@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AdocEditorCommand, ListType } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 
@@ -7,7 +7,7 @@ import { DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
     templateUrl: './editor-toolbar.component.html',
     styleUrls: [ './editor-toolbar.component.less' ],
 })
-export class EditorToolbarComponent implements OnInit {
+export class EditorToolbarComponent  {
     bold: AdocEditorCommand = { kind: 'bold' };
     italic: AdocEditorCommand = { kind: 'italic' };
     braces: AdocEditorCommand = { kind: 'braces' };
@@ -26,9 +26,6 @@ export class EditorToolbarComponent implements OnInit {
     }
 
     constructor(@Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService) {}
-
-    ngOnInit(): void {
-    }
 
     showPreview() {
         this.docEditorSvc.togglePreview(true);

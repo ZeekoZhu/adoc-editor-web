@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,12 +6,10 @@ import { FormGroup } from '@angular/forms';
     templateUrl: './table-col-config.component.html',
     styleUrls: [ './table-col-config.component.less' ],
 })
-export class TableColConfigComponent implements OnInit {
+export class TableColConfigComponent {
 
     @Input() fg: FormGroup;
 
     constructor() { }
 
-    ngOnInit(): void {
-    }
 }

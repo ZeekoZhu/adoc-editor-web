@@ -4,6 +4,7 @@ import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { DocEditorQuery, DocEditorService, DocEditorServiceToken } from '@app/doc-editor/store';
 import { AdocService } from '@app/services/adoc/adoc.service';
 import { filter } from 'rxjs/operators';
+import { PreviewService } from '@app/preview/preview.service';
 
 @Component({
     selector: 'app-editor-panel',
@@ -52,6 +53,7 @@ export class EditorPanelComponent implements OnInit {
     constructor(
         @Inject(AdocService) private adocSvc: AdocService,
         @Inject(DocEditorServiceToken) private docEditorSvc: DocEditorService,
+        private previewSvc: PreviewService,
         private docEditorQuery: DocEditorQuery) { }
 
     showPreview$ = this.docEditorQuery.showPreview$;
@@ -62,6 +64,7 @@ export class EditorPanelComponent implements OnInit {
 
     togglePreview() {
         this.docEditorSvc.togglePreview();
+        this.previewSvc.scheduleRender(this.docEditorQuery.content);
     }
 
     ngOnInit(): void {
