@@ -25,19 +25,28 @@ jobs:
     needs: test
     steps:
     - uses: actions/checkout@v2
-
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: |
+          zeeko/adoc-editor-web
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+    - name: Docker Login
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v1.10.0
+      with:
+        # Username used to log against the Docker registry
+        username: ${{ secrets.DockerUser }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.DockerPassword }}
     - name: Build and push Docker images
       uses: docker/build-push-action@v1.1.0
       with:
-        # Username used to log in to a Docker registry. If not set then no login will occur
-        username: ${{ secrets.DockerUser }}
-        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
-        password: ${{ secrets.DockerPassword }}
-        # Server address of Docker registry. If not set then will default to Docker Hub
-        registry: ${{ secrets.DockerRegistry }}
-        # Docker repository to tag the image with
-        repository: zeeko/adoc-editor-web
-        # Automatically tags the built image with the git reference as per the readme
-        tag_with_ref: true
-        # Always attempt to pull a newer version of the image
-        always_pull: true
+        context: .
+        pull: true
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
