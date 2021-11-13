@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AdocConverter } from './adoc-converter';
-
-import asciidoctor from 'asciidoctor';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AdocService {
-    private converter = new AdocConverter(asciidoctor());
     private readonly worker: Worker;
     private msgId = 0;
     private tasks = new Map<number, (value: any) => void>();
@@ -33,7 +29,7 @@ export class AdocService {
                 this.tasks.set(id, resolve);
             }));
         } else {
-            return Promise.resolve(this.converter.convert(content));
+            throw new Error('Web workers are not supported in this environment.');
         }
 
     }

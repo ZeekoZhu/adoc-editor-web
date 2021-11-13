@@ -19,7 +19,10 @@ export class AdocConverter {
     // @ts-ignore
     private registry = this.processor.Extensions.create();
     private convertOpt: ProcessorOptions = {
-        sourcemap: true, extension_registry: this.registry, standalone: false, attributes: {
+        sourcemap: true,
+        extension_registry: this.registry,
+        standalone: false,
+        attributes: {
             showtitle: true,
         },
     };

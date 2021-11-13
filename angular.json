@@ -20,9 +20,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "ace-builds/webpack-resolver"
-            ],
             "outputPath": "dist/adoc-editor-web",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -37,13 +34,15 @@
                 "glob": "mdi.svg",
                 "input": "./node_modules/@mdi/angular-material",
                 "output": "./assets"
+              },
+              {
+                "glob": "asciidoctor.min.js",
+                "input": "node_modules/@asciidoctor/core/dist/browser/",
+                "output": "./assets"
               }
             ],
             "styles": [
               "src/styles.less"
-            ],
-            "scripts": [
-              "./node_modules/@asciidoctor/core/dist/browser/asciidoctor.min.js"
             ],
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
