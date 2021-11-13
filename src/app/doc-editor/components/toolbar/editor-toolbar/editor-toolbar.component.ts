@@ -1,13 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { AdocEditorCommand, ListType } from '@app/doc-editor/adoc-editor-command';
-import { EditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
+import { EditorService, DocEditorServiceToken, EditorStore, EditorQuery } from '@app/doc-editor/store';
+import { PreviewService } from '@app/preview/preview.service';
 
 @Component({
     selector: 'app-editor-toolbar',
     templateUrl: './editor-toolbar.component.html',
     styleUrls: [ './editor-toolbar.component.less' ],
 })
-export class EditorToolbarComponent  {
+export class EditorToolbarComponent {
     bold: AdocEditorCommand = { kind: 'bold' };
     italic: AdocEditorCommand = { kind: 'italic' };
     braces: AdocEditorCommand = { kind: 'braces' };
@@ -26,9 +27,12 @@ export class EditorToolbarComponent  {
     }
 
     constructor(@Inject(DocEditorServiceToken) private docEditorSvc: EditorService,
+                private previewSvc: PreviewService,
+                private editorQuery: EditorQuery,
                 private editorStore: EditorStore) {}
 
     showPreview() {
         this.editorStore.togglePreview(true);
+        this.previewSvc.scheduleRender(this.editorQuery.content);
     }
 }

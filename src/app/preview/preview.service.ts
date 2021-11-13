@@ -18,7 +18,6 @@ export class PreviewService {
     renderedContent$: Observable<string>;
 
     scheduleRender(content: string) {
-        console.log('render preview');
         this._$preview.next(content);
     }
 }
