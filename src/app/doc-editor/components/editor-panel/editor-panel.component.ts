@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, Inject, OnInit } from '@angular/core';
 import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
 import { EditorQuery, EditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
-import { AdocService } from '@app/services/adoc/adoc.service';
+import { AdocAsyncConverterService } from '@app/services/adoc/adoc-async-converter.service';
 import { filter } from 'rxjs/operators';
 import { PreviewService } from '@app/preview/preview.service';
 
@@ -51,7 +51,7 @@ import { PreviewService } from '@app/preview/preview.service';
 export class EditorPanelComponent implements OnInit {
 
     constructor(
-        @Inject(AdocService) private adocSvc: AdocService,
+        private adocSvc: AdocAsyncConverterService,
         @Inject(DocEditorServiceToken) private docEditorSvc: EditorService,
         private previewSvc: PreviewService,
         private editorStore: EditorStore,

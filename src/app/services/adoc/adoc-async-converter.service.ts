@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class AdocService {
+export class AdocAsyncConverterService {
     private readonly worker: Worker;
     private msgId = 0;
     private tasks = new Map<number, (value: any) => void>();

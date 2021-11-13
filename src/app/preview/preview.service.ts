@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdocService } from '@app/services/adoc/adoc.service';
+import { AdocAsyncConverterService } from '@app/services/adoc/adoc-async-converter.service';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
 
@@ -7,7 +7,7 @@ import { shareReplay, switchMap } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class PreviewService {
-    constructor(private adocService: AdocService) {
+    constructor(private adocService: AdocAsyncConverterService) {
         this.renderedContent$ = this._$preview.pipe(
             switchMap(it => this.adocService.convert(it)),
             shareReplay(1),
