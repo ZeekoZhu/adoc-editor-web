@@ -12,7 +12,10 @@
              class="preview-area editor-panel__block">
             <div class="preview-area__tools">
                 <div class="spacer"></div>
-                <app-toolbar-item class="preview-btn" icon="tray-minus" (click)="togglePreview()"></app-toolbar-item>
+                <app-toolbar-item
+                    class="preview-btn"
+                    [item]="previewItem"
+                    (click)="togglePreview()"></app-toolbar-item>
             </div>
             <div class="preview-area__content">
                 <div class="mask">

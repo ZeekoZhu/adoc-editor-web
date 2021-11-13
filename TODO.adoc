@@ -1,0 +1,20 @@
+= TODO
+
+* text formatting
+** [*] todo item tooltip
+*** shortcut
+*** description
+** [ ] text highlight
+** [ ] text span and built in roles
+** [ ] subscript and superscript
+** [ ] custom styles
+
+* [ ] List
+** [ ] list continuation
+** [ ] separate list
+
+* [ ] macOS keyboard support
+** [ ] shortcut keybindings
+
+* [ ] shortcut for table
+* [ ] shortcut for preview panel

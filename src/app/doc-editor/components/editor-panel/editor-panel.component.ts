@@ -5,6 +5,7 @@ import { EditorQuery, EditorService, DocEditorServiceToken, EditorStore } from '
 import { AdocAsyncConverterService } from '@app/services/adoc/adoc-async-converter.service';
 import { filter } from 'rxjs/operators';
 import { PreviewService } from '@app/preview/preview.service';
+import { ToolbarItemInfo } from '@app/doc-editor/components';
 
 @Component({
     selector: 'app-editor-panel',
@@ -57,6 +58,12 @@ export class EditorPanelComponent implements OnInit {
         private editorStore: EditorStore,
         private editorQuery: EditorQuery) { }
 
+    previewItem = {
+        title: 'Preview',
+        icon: 'tray-minus',
+        description: 'Close preview panel',
+        shortCut: '',
+    } as ToolbarItemInfo;
     showPreview$ = this.editorQuery.showPreview$;
 
     executeToolbarCommand(cmd: AdocEditorCommand) {

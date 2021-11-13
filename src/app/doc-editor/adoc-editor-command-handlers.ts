@@ -138,14 +138,14 @@ const listHandler = (newList: ListType) => (editor: Editor) => {
     const originList = getListInfo(line);
     const operations: ListModification[] = [];
     if (originList === null) {
-        operations.push({kind: 'add', list: newList});
+        operations.push({ kind: 'add', list: newList });
     } else {
         if (newList.type === originList.type) {
             if (originList.type === 'check') {
                 const checkList = originList as CheckList;
                 operations.push(...replaceList(originList, { ...originList, checked: !checkList.checked }));
             } else {
-                operations.push({kind: 'remove', list: originList});
+                operations.push({ kind: 'remove', list: originList });
             }
         } else {
             operations.push(...replaceList(originList, newList));
@@ -155,8 +155,8 @@ const listHandler = (newList: ListType) => (editor: Editor) => {
 };
 
 type ListModification =
-    | { kind: 'add', list: ListType}
-    | { kind: 'remove', list: ListType};
+    | { kind: 'add', list: ListType }
+    | { kind: 'remove', list: ListType };
 
 const toListString = (list: ListType): string => {
     let result = '';
@@ -167,7 +167,7 @@ const toListString = (list: ListType): string => {
             break;
         case 'check':
             const checkList = list as CheckList;
-            result = `${'*'.repeat(list.level)} [${checkList.checked === true ? 'x' : ' '}]`;
+            result = `${'*'.repeat(list.level)} [${checkList.checked ? 'x' : ' '}]`;
             break;
     }
     return result + ' ';
@@ -202,7 +202,7 @@ const modifyList = (modification: ListModification, editor: Editor) => {
 };
 
 const replaceList = (originList: ListType, newList: ListType): ListModification[] =>
-    [{kind: 'remove', list: originList}, {kind: 'add', list: newList}];
+    [ { kind: 'remove', list: originList }, { kind: 'add', list: newList } ];
 
 const changeListLevel = (increase: boolean) => (editor: Ace.Editor) => {
     const position = editor.getCursorPosition();
@@ -216,7 +216,7 @@ const changeListLevel = (increase: boolean) => (editor: Ace.Editor) => {
 
     const newList = { ...originList, level: originList.level + (increase ? 1 : -1) } as ListType;
     if (newList.level === 0) {
-        modification.push({kind: 'remove', list: originList});
+        modification.push({ kind: 'remove', list: originList });
     } else {
         modification.push(...replaceList(originList, newList));
     }
@@ -242,7 +242,7 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
         case 'italic':
             inlineMarkHandler('__')(editor);
             break;
-        case 'braces':
+        case 'monospace':
             inlineMarkHandler('``')(editor);
             break;
         case 'header':

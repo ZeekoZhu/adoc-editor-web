@@ -42,14 +42,14 @@ const italic: Command = {
     },
 };
 
-const braces: Command = {
-    name: 'braces',
+const monospace: Command = {
+    name: 'monospace',
     bindKey: {
         win: 'ctrl+k',
         mac: 'cmd+k',
     },
     exec: editor => {
-        commandHandler({ kind: 'braces' }, editor);
+        commandHandler({ kind: 'monospace' }, editor);
     },
 };
 
@@ -131,9 +131,17 @@ const decreaseListLevel: Command = {
 
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);
 export const commands: (AdocEditorCommand | Command)[] = [
-    ...headerCommands, bold, italic, braces,
-    openTableConfig, breakList, list, orderedList, checkList,
-    increaseListLevel, decreaseListLevel,
+    ...headerCommands,
+    bold,
+    italic,
+    monospace,
+    openTableConfig,
+    breakList,
+    list,
+    orderedList,
+    checkList,
+    increaseListLevel,
+    decreaseListLevel,
 ];
 export const bindCommands = (editor: Editor, editorSvc: EditorService) => {
     commands.forEach(cmd => {

@@ -19,16 +19,6 @@
         <mat-icon svgIcon="format-header-5"></mat-icon>
     </button>
 </mat-menu>
-<!-- marks menu -->
-<!--<mat-menu #marksMenu="matMenu">-->
-<!--    <button mat-menu-item>-->
-<!--        <mat-icon svgIcon="format-underline"></mat-icon>-->
-<!--    </button>-->
-<!--    <button mat-menu-item>-->
-<!--        <mat-icon svgIcon="pencil"></mat-icon>-->
-<!--        Add more...-->
-<!--    </button>-->
-<!--</mat-menu>-->
 <!-- list menu -->
 <mat-menu #listMenu="matMenu">
     <button mat-menu-item (click)="execCmd(ul, focus)">
@@ -42,24 +32,22 @@
     </button>
 </mat-menu>
 <mat-toolbar>
-    <app-toolbar-item icon="format-bold" (click)="execCmd(bold)"></app-toolbar-item>
-    <app-toolbar-item icon="format-italic" (click)="execCmd(italic)"></app-toolbar-item>
-    <app-toolbar-item icon="code-braces" (click)="execCmd(braces)"></app-toolbar-item>
+    <app-toolbar-item *ngFor="let item of leftItems"
+                      [item]="item"
+                      (click)="execCmd(item.command)"
+    ></app-toolbar-item>
     <app-toolbar-item
-        icon="format-header-pound"
+        [item]="headingItem"
         [matMenuTriggerFor]="headingMenu"
     ></app-toolbar-item>
-    <!--    <app-toolbar-item-->
-    <!--        icon="marker"-->
-    <!--        [matMenuTriggerFor]="marksMenu"-->
-    <!--    ></app-toolbar-item>-->
-    <app-toolbar-item icon="table"
-                      (click)="openTableConfig()">
+    <app-toolbar-item
+        [item]="tableItem"
+        (click)="openTableConfig()">
     </app-toolbar-item>
     <app-toolbar-item
         [matMenuTriggerFor]="listMenu"
-        icon="format-list-bulleted-square"
+        [item]="listItem"
     ></app-toolbar-item>
     <div class="spacer"></div>
-    <app-toolbar-item icon="tray-full" (click)="showPreview()"></app-toolbar-item>
+    <app-toolbar-item [item]="previewItem" (click)="showPreview()"></app-toolbar-item>
 </mat-toolbar>

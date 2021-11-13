@@ -34,7 +34,7 @@ export type ListType =
 export type AdocEditorCommand =
     | { kind: 'bold' }
     | { kind: 'italic' }
-    | { kind: 'braces' }
+    | { kind: 'monospace' }
     | { kind: 'focus' }
     | { kind: 'header', level: number }
     | { kind: 'list', list: ListType }

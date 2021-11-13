@@ -30,6 +30,7 @@ import {
 } from '@app/doc-editor/components';
 import { AceEditorService, DocEditorServiceToken, EditorStore } from '@app/doc-editor/store';
 import { PreviewModule } from '@app/preview/preview.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import { PreviewModule } from '@app/preview/preview.module';
         MatToolbarModule,
         ReactiveFormsModule,
         PreviewModule,
+        MatTooltipModule,
     ],
     providers: [
         {
