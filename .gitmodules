@@ -1,0 +1,3 @@
+[submodule "third-party/antora-ui"]
+	path = third-party/antora-ui
+	url = https://gitlab.com/antora/antora-ui-default.git

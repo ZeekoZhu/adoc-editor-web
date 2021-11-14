@@ -23,3 +23,6 @@ https://docs.asciidoctor.org/asciidoc/latest/text/
 
 * [ ] shortcut for table
 * [ ] shortcut for preview panel
+
+* theming preview
+** [ ] render preview in scoped style
