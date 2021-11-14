@@ -39,9 +39,9 @@ jobs:
       uses: docker/login-action@v1.10.0
       with:
         # Username used to log against the Docker registry
-        username: ${{ secrets.DockerUser }}
+        username: ${{ secrets.DOCKERUSER }}
         # Password or personal access token used to log against the Docker registry
-        password: ${{ secrets.DockerPassword }}
+        password: ${{ secrets.DOCKERPASSWORD }}
     - name: Build and push Docker images
       uses: docker/build-push-action@v1.1.0
       with:
