@@ -41,10 +41,22 @@ export class EditorToolbarComponent {
             command: { kind: 'monospace' },
         },
         {
-            icon: 'marker',
+            icon: 'format-color-highlight',
             shortCut: 'Ctrl + M',
             description: 'Highlight Text',
             command: { kind: 'highlight' },
+        },
+        {
+            icon: 'format-underline',
+            shortCut: '',
+            description: 'Underline',
+            command: { kind: 'role', role: 'underline' },
+        },
+        {
+            icon: 'format-strikethrough',
+            shortCut: '',
+            description: 'Strikethrough',
+            command: { kind: 'role', role: 'line-through' },
         },
     ];
     headingItem = {

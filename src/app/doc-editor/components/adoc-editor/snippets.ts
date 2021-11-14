@@ -15,6 +15,8 @@ snippet img
 	image:\${1:url}[\${2:alt}]
 snippet pic
 	image::\${1:url}[\${2:alt}]
+snippet role
+    [.\${1:name}]##\${2:content}##
 `;
 
 export const addSnippets = (editor: Ace.Editor) => {

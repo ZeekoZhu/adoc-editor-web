@@ -31,8 +31,21 @@ export type ListType =
     | UnorderedList
     | CheckList;
 
+type CommandKind =
+    'bold'
+    | 'italic'
+    | 'monospace'
+    | 'focus'
+    | 'highlight'
+    | 'header'
+    | 'list'
+    | 'table'
+    | 'listLevel'
+    | 'breakList'
+    | 'role';
+
 interface BaseAdocEditorCommand {
-    kind: 'bold' | 'italic' | 'monospace' | 'focus' | 'highlight' | 'header' | 'list' | 'table' | 'listLevel' | 'breakList';
+    kind: CommandKind;
 }
 
 export interface AdocEditorCommandBold extends BaseAdocEditorCommand {
@@ -79,6 +92,11 @@ export interface AdocEditorCommandBreakList extends BaseAdocEditorCommand {
     kind: 'breakList';
 }
 
+export interface AdocEditorCommandRole extends BaseAdocEditorCommand {
+    kind: 'role';
+    role: string;
+}
+
 export type AdocEditorCommand =
     | AdocEditorCommandBold
     | AdocEditorCommandItalic
@@ -89,4 +107,5 @@ export type AdocEditorCommand =
     | AdocEditorCommandList
     | AdocEditorCommandTable
     | AdocEditorCommandListLevel
-    | AdocEditorCommandBreakList;
+    | AdocEditorCommandBreakList
+    | AdocEditorCommandRole;

@@ -2,8 +2,8 @@ import { Ace, Range } from 'ace-builds';
 import { AdocEditorCommand, CheckList, ListType } from './adoc-editor-command';
 
 import { ColumnConfigModel, TableConfigModel } from './doc-editor-models';
-import Editor = Ace.Editor;
 import { assertExhausted } from '~/utils/assert-exhausted';
+import Editor = Ace.Editor;
 
 declare module 'ace-builds' {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -21,6 +21,17 @@ const inlineMarkHandler = (delimiter: string) => (editor: Editor) => {
     } else {
         const selected = editor.getSelectedText();
         editor.insert(delimiter + selected + delimiter);
+    }
+    editor.focus();
+};
+
+const inlineRoleHandler = (role: string) => (editor: Editor) => {
+    const delimiter = '##';
+    const createSnippet = (content: string) => `[.${role}]` + delimiter + content + delimiter;
+    if (editor.getSelectionRange().isEmpty()) {
+        editor.insertSnippet(createSnippet('$1'));
+    } else {
+        editor.insert(createSnippet(editor.getSelectedText()));
     }
     editor.focus();
 };
@@ -265,6 +276,9 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
             break;
         case 'breakList':
             breakList(editor);
+            break;
+        case 'role':
+            inlineRoleHandler(cmd.role)(editor);
             break;
         case 'highlight':
             inlineMarkHandler('##')(editor);
