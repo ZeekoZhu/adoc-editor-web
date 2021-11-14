@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class AdocAsyncConverterService {
     private readonly worker: Worker;
     private msgId = 0;
-    private tasks = new Map<number, (value: any) => void>();
+    private tasks = new Map<number, (value: string) => void>();
 
     constructor() {
         const tasks = this.tasks;

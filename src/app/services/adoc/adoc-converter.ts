@@ -4,8 +4,7 @@ import ProcessorOptions = Asciidoctor.ProcessorOptions;
 
 const blockIdMarkerProcessor = (registry: Registry) => {
     registry.treeProcessor(function () {
-        const self = this;
-        self.process(doc => {
+        this.process(doc => {
             const blocks = doc.findBy(() => true);
             blocks.forEach(blk => {
                 const lineMark = '__adoc-line-' + blk.getLineNumber();
@@ -16,7 +15,6 @@ const blockIdMarkerProcessor = (registry: Registry) => {
 };
 
 export class AdocConverter {
-    // @ts-ignore
     private registry = this.processor.Extensions.create();
     private convertOpt: ProcessorOptions = {
         sourcemap: true,

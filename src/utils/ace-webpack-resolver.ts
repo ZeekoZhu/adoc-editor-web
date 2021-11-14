@@ -1,6 +1,7 @@
 import * as ace from 'ace-builds';
 
 declare module 'ace-builds' {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Ace {
         interface Config {
             setModuleUrl(name: string, subst: URL): void;

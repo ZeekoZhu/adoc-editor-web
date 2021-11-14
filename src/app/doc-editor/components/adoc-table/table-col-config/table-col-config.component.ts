@@ -10,6 +10,4 @@ export class TableColConfigComponent {
 
     @Input() fg: FormGroup;
 
-    constructor() { }
-
 }

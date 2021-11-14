@@ -50,7 +50,6 @@ export class AdocEditorComponent implements AfterViewInit, OnDestroy {
         addSnippets(this.editor);
         this.docEditorSvc.initialize(this.editor);
         bindCommands(this.editor, this.docEditorSvc);
-        // @ts-ignore
     }
 
     ngOnDestroy(): void {

@@ -20,7 +20,7 @@ snippet pic
 export const addSnippets = (editor: Ace.Editor) => {
     return new Promise<void>(((resolve, reject) => {
         try {
-            ace.config.loadModule('ace/ext/language_tools', m => {
+            ace.config.loadModule('ace/ext/language_tools', _ => {
                 editor.setOptions({
                     enableSnippets: true,
                 });

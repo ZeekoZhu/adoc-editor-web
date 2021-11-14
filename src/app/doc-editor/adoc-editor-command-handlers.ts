@@ -5,6 +5,7 @@ import { ColumnConfigModel, TableConfigModel } from './doc-editor-models';
 import Editor = Ace.Editor;
 
 declare module 'ace-builds' {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Ace {
         interface Editor {
             insertSnippet(snippetText: string): void;
@@ -165,10 +166,11 @@ const toListString = (list: ListType): string => {
         case 'ol':
             result = list.mark.repeat(list.level);
             break;
-        case 'check':
+        case 'check': {
             const checkList = list as CheckList;
             result = `${'*'.repeat(list.level)} [${checkList.checked ? 'x' : ' '}]`;
             break;
+        }
     }
     return result + ' ';
 };

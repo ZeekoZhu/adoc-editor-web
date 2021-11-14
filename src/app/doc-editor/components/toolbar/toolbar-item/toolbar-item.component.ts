@@ -18,6 +18,4 @@ export class ToolbarItemComponent {
         return `${this.item.description} - ${this.item.shortCut}`;
     }
 
-    constructor() { }
-
 }
