@@ -116,7 +116,6 @@ const increaseListLevel: Command = {
         win: 'ctrl+]',
         mac: 'cmd+]',
     },
-    // exec: editor => commandHandler(def('listLevel', true), editor),
     exec: editor => commandHandler({ kind: 'listLevel', increase: true }, editor),
 };
 
@@ -127,6 +126,17 @@ const decreaseListLevel: Command = {
         mac: 'cmd+[',
     },
     exec: editor => commandHandler({ kind: 'listLevel', increase: false }, editor),
+};
+
+const highlightText: Command = {
+    name: 'highlight-text',
+    bindKey: {
+        win: 'ctrl+h',
+        mac: 'cmd+h',
+    },
+    exec: editor => {
+        commandHandler({ kind: 'highlight' }, editor);
+    },
 };
 
 const headerCommands = [ 1, 2, 3, 4, 5, 6 ].map(insertHeader);
@@ -142,6 +152,7 @@ export const commands: (AdocEditorCommand | Command)[] = [
     checkList,
     increaseListLevel,
     decreaseListLevel,
+    highlightText,
 ];
 export const bindCommands = (editor: Editor, editorSvc: EditorService) => {
     commands.forEach(cmd => {

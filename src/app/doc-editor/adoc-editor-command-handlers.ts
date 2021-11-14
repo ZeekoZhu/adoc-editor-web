@@ -3,6 +3,7 @@ import { AdocEditorCommand, CheckList, ListType } from './adoc-editor-command';
 
 import { ColumnConfigModel, TableConfigModel } from './doc-editor-models';
 import Editor = Ace.Editor;
+import { assertExhausted } from '~/utils/assert-exhausted';
 
 declare module 'ace-builds' {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -264,5 +265,11 @@ export const commandHandler = (cmd: AdocEditorCommand, editor: Editor) => {
             break;
         case 'breakList':
             breakList(editor);
+            break;
+        case 'highlight':
+            inlineMarkHandler('##')(editor);
+            break;
+        default:
+            assertExhausted(cmd);
     }
 };

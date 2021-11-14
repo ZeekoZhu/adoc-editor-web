@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AdocEditorCommand } from '@app/doc-editor/adoc-editor-command';
+import { AdocEditorCommand  } from '@app/doc-editor/adoc-editor-command';
 import { commandHandler } from '@app/doc-editor/adoc-editor-command-handlers';
 import { TableConfigComponent } from '@app/doc-editor/components/adoc-table/table-config/table-config.component';
 import { EditorService } from '@app/doc-editor/store/editor.service';

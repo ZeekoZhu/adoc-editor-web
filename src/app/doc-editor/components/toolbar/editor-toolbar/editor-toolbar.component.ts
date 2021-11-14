@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { AdocEditorCommand, ListType } from '@app/doc-editor/adoc-editor-command';
+import {
+    AdocEditorCommand,
+    ListType,
+} from '@app/doc-editor/adoc-editor-command';
 import { DocEditorServiceToken, EditorQuery, EditorService, EditorStore } from '@app/doc-editor/store';
 import { PreviewService } from '@app/preview/preview.service';
 import { ToolbarItemInfo } from '@app/doc-editor/components';
@@ -36,6 +39,12 @@ export class EditorToolbarComponent {
             shortCut: 'Ctrl + K',
             description: 'Monospace',
             command: { kind: 'monospace' },
+        },
+        {
+            icon: 'marker',
+            shortCut: 'Ctrl + M',
+            description: 'Highlight Text',
+            command: { kind: 'highlight' },
         },
     ];
     headingItem = {

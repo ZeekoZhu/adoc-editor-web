@@ -31,13 +31,62 @@ export type ListType =
     | UnorderedList
     | CheckList;
 
+interface BaseAdocEditorCommand {
+    kind: 'bold' | 'italic' | 'monospace' | 'focus' | 'highlight' | 'header' | 'list' | 'table' | 'listLevel' | 'breakList';
+}
+
+export interface AdocEditorCommandBold extends BaseAdocEditorCommand {
+    kind: 'bold';
+}
+
+export interface AdocEditorCommandItalic extends BaseAdocEditorCommand {
+    kind: 'italic';
+}
+
+export interface AdocEditorCommandMonospace extends BaseAdocEditorCommand {
+    kind: 'monospace';
+}
+
+export interface AdocEditorCommandFocus extends BaseAdocEditorCommand {
+    kind: 'focus';
+}
+
+export interface AdocEditorCommandHighlight extends BaseAdocEditorCommand {
+    kind: 'highlight';
+}
+
+export interface AdocEditorCommandHeader extends BaseAdocEditorCommand {
+    kind: 'header';
+    level: number;
+}
+
+export interface AdocEditorCommandList extends BaseAdocEditorCommand {
+    kind: 'list';
+    list: ListType;
+}
+
+export interface AdocEditorCommandTable extends BaseAdocEditorCommand {
+    kind: 'table';
+    config: TableConfigModel;
+}
+
+export interface AdocEditorCommandListLevel extends BaseAdocEditorCommand {
+    kind: 'listLevel';
+    increase: boolean;
+}
+
+export interface AdocEditorCommandBreakList extends BaseAdocEditorCommand {
+    kind: 'breakList';
+}
+
 export type AdocEditorCommand =
-    | { kind: 'bold' }
-    | { kind: 'italic' }
-    | { kind: 'monospace' }
-    | { kind: 'focus' }
-    | { kind: 'header', level: number }
-    | { kind: 'list', list: ListType }
-    | { kind: 'table', config: TableConfigModel }
-    | { kind: 'listLevel' , increase: boolean }
-    | { kind: 'breakList' };
+    | AdocEditorCommandBold
+    | AdocEditorCommandItalic
+    | AdocEditorCommandMonospace
+    | AdocEditorCommandFocus
+    | AdocEditorCommandHighlight
+    | AdocEditorCommandHeader
+    | AdocEditorCommandList
+    | AdocEditorCommandTable
+    | AdocEditorCommandListLevel
+    | AdocEditorCommandBreakList;

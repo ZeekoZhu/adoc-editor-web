@@ -1,10 +1,12 @@
 = TODO
 
+https://docs.asciidoctor.org/asciidoc/latest/text/
+
 * text formatting
 ** [*] todo item tooltip
 *** shortcut
 *** description
-** [ ] text highlight
+** [x] text highlight
 ** [ ] text span and built in roles
 ** [ ] subscript and superscript
 ** [ ] custom styles
