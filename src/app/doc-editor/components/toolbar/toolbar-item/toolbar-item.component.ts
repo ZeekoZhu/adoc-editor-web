@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 export type ToolbarItemInfo = {
     icon: string;
-    shortCut: string;
+    shortCut?: string;
     description: string;
 };
 
@@ -15,7 +15,10 @@ export class ToolbarItemComponent {
     @Input() item: ToolbarItemInfo;
 
     get tooltip(): string {
-        return `${this.item.description} - ${this.item.shortCut}`;
+        if(this.item.shortCut) {
+            return `${this.item.description} - ${this.item.shortCut}`;
+        }
+        return this.item.description;
     }
 
 }
