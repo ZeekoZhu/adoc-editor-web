@@ -30,7 +30,7 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: |
-          zeeko/adoc-editor-web
+          zeekozhu/adoc-editor-web
         tags: |
           type=ref,event=branch
           type=ref,event=pr
