@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
-    "@datorama/akita": "^6.0.0",
+    "@datorama/akita": "^6.2.4",
     "@datorama/akita-ng-router-store": "^6.0.2",
     "@datorama/akita-ngdevtools": "^6.0.1",
     "@mdi/angular-material": "^6.4.95",
